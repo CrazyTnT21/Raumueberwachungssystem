@@ -3,7 +3,6 @@ import * as http from "http";
 import * as path from "path";
 import {contentTypeExtensions, FileResponse} from "./file-response.mjs";
 
-process.chdir("../");
 process.chdir("src");
 const port = 80;
 http.createServer(processRequest).listen(port);
