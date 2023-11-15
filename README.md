@@ -1,6 +1,9 @@
 # Raumüberwachungssystem
 
+## Beschreibung
+
 ## Webseite
+Diese Projekt dient zur Sammlung & Darstellung von Raumbezogenen Daten wie Luftqualität über einen Zeitraum.
 
 ### Lokaler Server
 
