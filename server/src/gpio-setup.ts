@@ -1,7 +1,6 @@
-﻿import {promise as GPIO} from "rpi-gpio";
+﻿import { Gpio } from "onoff";
 
-export async function setupGPIO(): Promise<void>
-{
-    await GPIO.setup(7, GPIO.DIR_IN);
-    await GPIO.read(7);
+export async function setupGPIO(): Promise<void> {
+    const test = new Gpio(12, "in");
+    await test.read();
 }
