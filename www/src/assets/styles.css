@@ -5,7 +5,7 @@
 body {
     margin: 0;
 }
-
+/*
 app-header {
     display: flex;
     width: 100%;
@@ -46,3 +46,11 @@ a {
 li {
     list-style: none;
 }
+
+.startseite {
+    
+    color: black;
+    text-decoration: none;
+    padding: 20px
+}
+*/
