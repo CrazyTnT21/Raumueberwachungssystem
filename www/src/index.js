@@ -1,29 +1,38 @@
-import {Chart} from "chart.js";
-//Example
-(async function () {
-    const data = [
-        { year: 2010, count: 10 },
-        { year: 2011, count: 20 },
-        { year: 2012, count: 15 },
-        { year: 2013, count: 25 },
-        { year: 2014, count: 22 },
-        { year: 2015, count: 30 },
-        { year: 2016, count: 28 },
-    ];
+import {Chart} from "chart.js/auto";
 
-    new Chart()(
-        document.getElementById('example'),
-        {
-            type: 'bar',
-            data: {
-                labels: data.map(row => row.year),
-                datasets: [
-                    {
-                        label: 'Acquisitions by year',
-                        data: data.map(row => row.count)
-                    }
-                ]
-            }
-        }
-    );
-})();
+const ctx = document.getElementById("myChart");
+const ctx2 = document.getElementById("myChart2");
+
+
+createChart(ctx)
+createChart(ctx2)
+function createChart(elemnt){
+    new Chart(elemnt, {
+        type: "line",
+        data: {
+            labels: ["1:00", "2:00", "3:00", "4:00", "5:00", "6:00"],
+            datasets: [{
+                label: "CO2 Gehalt (%)",
+                data: [1, 14, 14, 3, 7, 3],
+                borderWidth: 1,
+            },{
+                label: "Temperatur (Celsius)",
+                data: [4, 3, 3, 3, 2,1],
+                borderWidth: 1,
+            }],
+        },
+        options: {
+            devicePixelRatio: 4,
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: "top",
+                },
+                title: {
+                    display: true,
+                    text: "CO2 Gehalt & Temperatur",
+                },
+            },
+        },
+    });
+}

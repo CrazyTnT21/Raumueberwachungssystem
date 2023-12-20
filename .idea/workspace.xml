@@ -4,38 +4,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e1c12462-3116-4368-8c08-92974e3d198f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Raumueberwachungssystem.dir/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Raumueberwachungssystem.dir/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Raumueberwachungssystem.dir/.idea/indexLayout.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Raumueberwachungssystem.dir/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Raumueberwachungssystem.dir/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.Raumueberwachungssystem.dir/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/Raumueberwachungssystem.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dokumentation/Technische_Daten.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/editor.conf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/db/create.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/www/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/www/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/www/src/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/www/webpack.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/gpio-setup.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/gpio-setup.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/dev-server/dev-server.mjs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/dev-server/file-response.mjs" beforeDir="false" />
+    <list default="true" id="e1c12462-3116-4368-8c08-92974e3d198f" name="Changes" comment="chart js integration &amp; small header changes">
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Database/startup.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/classes/raum.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/db/insert.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/www/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/classes/Feuchtigkeit.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/classes/Feuchtigkeit.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/classes/Licht.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/classes/Licht.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/classes/Luft.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/classes/Luft.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/classes/Temperatur.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/classes/Temperatur.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/db/create.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/db/select.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/db/select.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/src/assets/components/app-header.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/src/assets/components/app-header.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/src/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/webpack.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -46,31 +45,77 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 3
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
   <component name="ProjectId" id="2ZH4lthUf7USJ86xVeYJkkORs3Q" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/Danie/Documents/Projects/Raumueberwachungssystem/server/src/db",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\RustRover 233.8264.22\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;16.17.0&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;16.18.68&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Danie/Documents/Projects/Raumueberwachungssystem/www/src&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.start (1).executor&quot;: &quot;Run&quot;,
+    &quot;npm.start.executor&quot;: &quot;Run&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.HTML&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\RustRover 233.10527.212\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ]
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Danie\Documents\Projects\Raumueberwachungssystem\www\src" />
+      <recent name="C:\Users\Danie\Documents\Projects\Raumueberwachungssystem\server\src\db" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Danie\Documents\Projects\Raumueberwachungssystem\Database" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.start">
+    <configuration name="start (1)" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/www/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/server/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.start (1)" />
+        <item itemvalue="npm.start" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -79,11 +124,38 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1702065824608</updated>
-      <workItem from="1702065825772" duration="1352000" />
+      <workItem from="1702065825772" duration="1520000" />
+      <workItem from="1702131937293" duration="9000" />
+      <workItem from="1702405008214" duration="2565000" />
+      <workItem from="1702453347673" duration="3000" />
+      <workItem from="1702478466601" duration="3340000" />
+      <workItem from="1702493174146" duration="65000" />
+      <workItem from="1702493281284" duration="204000" />
+      <workItem from="1702493511826" duration="2584000" />
+      <workItem from="1702806907555" duration="59000" />
+      <workItem from="1703075390912" duration="61000" />
     </task>
+    <task id="LOCAL-00001" summary="Webppack zum Projekt hinzugefügt.&#10;Dokumentation hinzugefügt.&#10;Kleinigkeiten angepasst.">
+      <option name="closed" value="true" />
+      <created>1702067310131</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1702067310131</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Webppack zum Projekt hinzugefügt.&#10;Dokumentation hinzugefügt.&#10;Kleinigkeiten angepasst." />
+    <MESSAGE value="chart js integration &amp; small header changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="chart js integration &amp; small header changes" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
