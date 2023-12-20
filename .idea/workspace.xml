@@ -5,23 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e1c12462-3116-4368-8c08-92974e3d198f" name="Changes" comment="chart js integration &amp; small header changes">
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Database/startup.sql" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/server/src/classes/raum.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/server/src/db/insert.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/www/src/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/repositories/luft-repository.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/classes/Feuchtigkeit.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/classes/Feuchtigkeit.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/classes/Licht.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/classes/Licht.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/classes/Luft.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/classes/Luft.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/classes/Temperatur.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/classes/Temperatur.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/Services/Feuchtigkeitservice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/services/Feuchtigkeitservice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/Services/Lichtservice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/services/Lichtservice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/Services/Luftservice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/services/Luftservice.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/Services/Temperatur.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/services/Temperatur.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/classes/Feuchtigkeit.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/classes/feuchtigkeit.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/classes/Licht.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/classes/licht.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/classes/Luft.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/classes/luft.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/classes/Temperatur.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/classes/temperatur.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/db/create.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/db/select.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/db/select.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/src/assets/components/app-header.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/src/assets/components/app-header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/webpack.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,6 +59,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;16.17.0&quot;,
     &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;16.18.68&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/Danie/Documents/Projects/Raumueberwachungssystem/www/src&quot;,
@@ -133,7 +134,9 @@
       <workItem from="1702493281284" duration="204000" />
       <workItem from="1702493511826" duration="2584000" />
       <workItem from="1702806907555" duration="59000" />
-      <workItem from="1703075390912" duration="61000" />
+      <workItem from="1703075390912" duration="1734000" />
+      <workItem from="1703091889639" duration="120000" />
+      <workItem from="1703093350392" duration="2392000" />
     </task>
     <task id="LOCAL-00001" summary="Webppack zum Projekt hinzugefügt.&#10;Dokumentation hinzugefügt.&#10;Kleinigkeiten angepasst.">
       <option name="closed" value="true" />
@@ -143,7 +146,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702067310131</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="chart js integration &amp; small header changes">
+      <option name="closed" value="true" />
+      <created>1703075458749</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1703075458749</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
