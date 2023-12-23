@@ -3,7 +3,7 @@ import {Room} from "./room";
 export class Air
 {
     public id: number = 0;
-    public value: number;
+    public value: number; //TODO: Add Unit
     public measured: Date;
     public room: Room;
 

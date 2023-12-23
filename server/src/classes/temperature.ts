@@ -3,13 +3,13 @@ import {Room} from "./room";
 export class Temperature
 {
     public id: number = 0;
-    public value: number;
+    public valueCelsius: number;
     public measured: Date;
     public room: Room;
 
-    constructor(value: number, measured: Date, room: Room)
+    constructor(valueCelsius: number, measured: Date, room: Room)
     {
-        this.value = value;
+        this.valueCelsius = valueCelsius;
         this.measured = measured;
         this.room = room;
     }
