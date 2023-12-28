@@ -18,10 +18,10 @@ class User
     }
 }
 
-export function defineRoutes(app: Express)
+export function defineRoutes(app: Express,client: Client)
 {
     const firstUser = new User(1, "Peter"); //Beispiel
-    const client = new Client("IP.....");
+
     app.get('/', (req, res) =>
     {
         res.send(firstUser)
