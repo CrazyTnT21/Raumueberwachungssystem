@@ -15,10 +15,10 @@ create table Temperature
 
 create table Humidity
 (
-    Id       int primary key generated always as identity,
-    Value    real      not null,
-    Measured timestamp not null,
-    FKRoom   int       not null references Room (Id)
+    Id              int primary key generated always as identity,
+    ValuePercentage real      not null,
+    Measured        timestamp not null,
+    FKRoom          int       not null references Room (Id)
 );
 
 create table Light
