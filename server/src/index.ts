@@ -1,6 +1,7 @@
 ﻿import express, {Express} from 'express';
 import {defineRoutes} from "./routes";
 import {Client} from "pg";
+import cors from 'cors';
 
 try
 {
@@ -45,6 +46,7 @@ async function run(config: ServerConfig)
 
     const app: Express = express();
 
+    app.use(cors())
     defineRoutes(app, dbClient);
     app.listen(config.port, () => console.log(`Server hört Anfragen auf Port ${config.port}`));
 }

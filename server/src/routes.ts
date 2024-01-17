@@ -1,5 +1,4 @@
-﻿//Beispiel
-import {Client} from "pg";
+﻿import {Client} from "pg";
 import {Express} from "express";
 import {DefaultAirRepository} from "./repositories/default-air-repository";
 import {DefaultAirService} from "./services/default-air-service";
@@ -22,18 +21,6 @@ import {DefaultTemperatureRepository} from "./repositories/default-temperature-r
 import {TemperatureRepository} from "./repositories/interfaces/temperature-repository";
 import {TemperatureService} from "./services/interfaces/temperature-service";
 
-class User
-{
-    Id: number;
-    Name: string;
-
-    constructor(id: number, name: string)
-    {
-        this.Id = id;
-        this.Name = name;
-    }
-}
-
 export function defineRoutes(app: Express, client: Client)
 {
     defineLightRoute(app, client);
@@ -48,10 +35,8 @@ function defineLightRoute(app: Express, client: Client)
     const lightService: LightService = new DefaultLightService(lightRepository);
     const lightController: LightController = new LightController(lightService);
 
-    app.get('/Licht', (req, res) =>
-        res.send(lightController.getItems(req)))
-    app.post('/Licht', (req, res) =>
-        res.send(lightController.createItem(req)))
+    app.get('/light', async (req, res) =>
+        res.send(await lightController.getItems(req)))
 }
 
 function defineAirRoute(app: Express, client: Client)
@@ -60,10 +45,8 @@ function defineAirRoute(app: Express, client: Client)
     const airService: AirService = new DefaultAirService(airRepository);
     const airController: AirController = new AirController(airService);
 
-    app.get('/Luft', (req, res) =>
-        res.send(airController.getItems(req)))
-    app.post('/Luft', (req, res) =>
-        res.send(airController.createItem(req)))
+    app.get('/air', async (req, res) =>
+        res.send(await airController.getItems(req)))
 }
 
 function defineTemperatureRoute(app: Express, client: Client)
@@ -72,10 +55,8 @@ function defineTemperatureRoute(app: Express, client: Client)
     const temperatureService: TemperatureService = new DefaultTemperatureService(temperatureRepository);
     const temperatureController: TemperatureController = new TemperatureController(temperatureService);
 
-    app.get('/Temperatur', (req, res) =>
-        res.send(temperatureController.getItems(req)))
-    app.post('/Temperatur', (req, res) =>
-        res.send(temperatureController.createItem(req)))
+    app.get('/Temperature', async (req, res) =>
+        res.send(await temperatureController.getItems(req)))
 }
 
 function defineHumidityRoute(app: Express, client: Client)
@@ -84,8 +65,6 @@ function defineHumidityRoute(app: Express, client: Client)
     const humidityService: HumidityService = new DefaultHumidityService(humidityRepository);
     const humidityController: HumidityController = new HumidityController(humidityService);
 
-    app.get('/Feuchtigkeit', (req, res) =>
-        res.send(humidityController.getItems(req)))
-    app.post('/Feuchtigkeit', (req, res) =>
-        res.send(humidityController.createItem(req)))
+    app.get('/humidity', async (req, res) =>
+        res.send(await humidityController.getItems(req)))
 }
