@@ -45,8 +45,7 @@ function defineAirRoute(app: Express, client: Client)
     const airService: AirService = new DefaultAirService(airRepository);
     const airController: AirController = new AirController(airService);
 
-    app.get('/air', async (req, res) =>
-        res.send(await airController.getItems(req)))
+    app.get('/air', (req, res) => airController.handleRequests(req, res))
 }
 
 function defineTemperatureRoute(app: Express, client: Client)

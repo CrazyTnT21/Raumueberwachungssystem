@@ -3,6 +3,7 @@ import {defineRoutes} from "./routes";
 import {Client} from "pg";
 import cors from 'cors';
 
+export const SERVER_URL: string = "localhost:3000";
 try
 {
     const args = getArgs();

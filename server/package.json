@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "start dev": "ts-node --script-mode ./src/index.ts",
+    "start dev": "ts-node --script-mode ./src/index.ts -- -password server",
     "build": "tsc",
     "start": "npm run build && node dist/index.js"
   },
