@@ -26,6 +26,6 @@ export class DefaultTemperatureService implements TemperatureService
 
     async getLatestItem(): Promise<Temperature>
     {
-        return new Temperature(0, new Date(), new Room(""));
+        return new Temperature(0, new Date(), new Room(1,""));
     }
 }

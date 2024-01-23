@@ -26,6 +26,6 @@ export class DefaultHumidityService implements HumidityService
 
     async getLatestItem(): Promise<Humidity>
     {
-        return new Humidity(0, new Date(), new Room(""));
+        return new Humidity(0, new Date(), new Room(1,""));
     }
 }

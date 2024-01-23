@@ -2,6 +2,7 @@ import {Air} from "../classes/air";
 import {AirRepository} from "../repositories/interfaces/air-repository";
 import {AirService} from "./interfaces/air-service";
 import {Room} from "../classes/room";
+import {Lazy} from "../lazy";
 
 export class DefaultAirService implements AirService
 {
@@ -9,9 +10,9 @@ export class DefaultAirService implements AirService
     {
     }
 
-    async createItem(item: Air): Promise<Air>
+    async createItem(item: Air): Promise<Lazy<Air>>
     {
-        return item;
+        return new Lazy(() => item);
     }
 
     async getItems(page: number, limit: number): Promise<Air[]>
@@ -26,6 +27,6 @@ export class DefaultAirService implements AirService
 
     async getLatestItem(): Promise<Air>
     {
-        return new Air(0, new Date(), new Room(""));
+        return new Air(0, new Date(), new Room(1,""));
     }
 }

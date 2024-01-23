@@ -26,6 +26,6 @@ export class DefaultAirRepository implements AirRepository
 
     async getLatestItem(): Promise<Air>
     {
-        return new Air(10, new Date(), new Room(""));
+        return new Air(10, new Date(), new Room(1, ""));
     }
 }

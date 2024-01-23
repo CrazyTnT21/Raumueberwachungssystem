@@ -26,6 +26,6 @@ export class DefaultTemperatureRepository implements TemperatureRepository
 
     async getLatestItem(): Promise<Temperature>
     {
-        return new Temperature(10, new Date(), new Room(""));
+        return new Temperature(10, new Date(), new Room(1,""));
     }
 }

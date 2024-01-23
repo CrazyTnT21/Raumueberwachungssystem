@@ -1,21 +1,39 @@
 ﻿import {Client} from "pg";
+import {Mapping} from "../mapping";
 
 export class Select<T>
 {
-    private readonly table: string;
-
-    public constructor(table: string)
+    public constructor(private readonly mapping: Mapping<T>)
     {
-        this.table = table;
     }
 
     private columns: { identifier: string | null, column: string }[] = [];
     private wheres = [];
 
-    public column(column: string, identifier: string | null = null): this
+    public column(column: string, identifier: string | null = null, property: keyof T): this
     {
         this.columns.push({identifier: identifier, column: column})
 
+        return this;
+    }
+
+    public join(table: string, alias?: string | null, property?: keyof T): this
+    {
+        return this;
+    }
+
+    public limit(amount: number): this
+    {
+        return this;
+    }
+
+    public order(): this
+    {
+        return this;
+    }
+
+    public where(column: string, value: any): this
+    {
         return this;
     }
 
@@ -41,7 +59,7 @@ export class Select<T>
         {
             query += this.createColumnText(this.columns[i]);
         }
-        query += ` FROM ${this.table}`;
+        query += ` FROM ${this.mapping.table}`;
         return {text: "", parameters: []};
     }
 
@@ -49,6 +67,6 @@ export class Select<T>
     {
         if (column.identifier)
             return `${column.identifier}.${column.column}`;
-        return `${this.table}.${column.column}`;
+        return `${this.mapping.table}.${column.column}`;
     }
 }

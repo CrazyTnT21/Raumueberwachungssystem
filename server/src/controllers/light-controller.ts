@@ -8,14 +8,9 @@ export class LightController
     {
     }
 
-    async createItem(req: any): Promise<Light>
-    {
-        return <Light>{};
-    }
-
     async getItems(req: any): Promise<Light[]>
     {
-        return [];
+        return this.lightService.getItems(0,50)
     }
 
     async getItemsByTimespan(from: Date, to: Date, page: number, limit: number): Promise<Light[]>
@@ -25,6 +20,6 @@ export class LightController
 
     async getLatestItem(): Promise<Light>
     {
-        return new Light(0, new Date(), new Room(""));
+        return new Light(0, new Date(), new Room(1,""));
     }
 }

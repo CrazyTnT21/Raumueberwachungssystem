@@ -1,4 +1,5 @@
 import {Light} from "../../classes/light";
+import {Lazy} from "../../lazy";
 
 
 export interface LightService
@@ -9,5 +10,5 @@ export interface LightService
 
     getItemsByTimespan(from: Date, to: Date, page: number, limit: number): Promise<Light[]>;
 
-    createItem(item: Light): Promise<Light>
+    createItem(item: Light): Promise<Lazy<Promise<Light>>>
 }

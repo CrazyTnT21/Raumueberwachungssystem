@@ -7,7 +7,7 @@ create table Room
 );
 create table Temperature
 (
-    Id           int primary key generated always as identity,
+    Id           bigint primary key generated always as identity,
     ValueCelsius real      not null,
     Measured     timestamp not null,
     FKRoom       int       not null references Room (Id)
@@ -15,7 +15,7 @@ create table Temperature
 
 create table Humidity
 (
-    Id              int primary key generated always as identity,
+    Id              bigint primary key generated always as identity,
     ValuePercentage real      not null,
     Measured        timestamp not null,
     FKRoom          int       not null references Room (Id)
@@ -23,7 +23,7 @@ create table Humidity
 
 create table Light
 (
-    Id       int primary key generated always as identity,
+    Id       bigint primary key generated always as identity,
     Value    real      not null,
     Measured timestamp not null,
     FKRoom   int       not null references Room (Id)
@@ -31,7 +31,7 @@ create table Light
 
 create table Air
 (
-    Id       int primary key generated always as identity,
+    Id       bigint primary key generated always as identity,
     Value    real      not null,
     Measured timestamp not null,
     FKRoom   int       not null references Room (Id)

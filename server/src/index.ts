@@ -1,7 +1,17 @@
 ﻿import express, {Express} from 'express';
-import {defineRoutes} from "./routes";
+import {defineRoutes, Services} from "./routes";
 import {Client} from "pg";
 import cors from 'cors';
+import {readLightData} from "./ads";
+import {Room} from "./classes/room";
+import {DefaultLightRepository} from "./repositories/default-light-repository";
+import {DefaultHumidityRepository} from "./repositories/default-humidity-repository";
+import {DefaultTemperatureRepository} from "./repositories/default-temperature-repository";
+import {DefaultAirRepository} from "./repositories/default-air-repository";
+import {DefaultLightService} from "./services/default-light-service";
+import {DefaultAirService} from "./services/default-air-service";
+import {DefaultTemperatureService} from "./services/default-temperature-service";
+import {DefaultHumidityService} from "./services/default-humidity-service";
 
 export const SERVER_URL: string = "localhost:3000";
 try
@@ -20,16 +30,11 @@ catch (e: Error | any)
 
 async function run(config: ServerConfig)
 {
-    const dbClient: Client = new Client({
-        host: config.dbConnection.host,
-        port: 5432,
-        database: 'roomsurveillancesystem',
-        user: 'server',
-        password: config.dbConnection.password,
-    });
+    const clientFunc = () => getClient(config.dbConnection.host, "server", config.dbConnection.password);
     try
     {
-        await validateDatabase(dbClient)
+        await validateDatabase(clientFunc())
+        console.log(`Verbindung zur Datenbank erfolgreich hergestellt!`);
     }
     catch (e)
     {
@@ -37,10 +42,22 @@ async function run(config: ServerConfig)
         console.error(e)
         return;
     }
-    console.log(`Verbindung zur Datenbank erfolgreich hergestellt!`);
+    const repositories = {
+        lightRepository: () => new DefaultLightRepository(clientFunc()),
+        airRepository: () => new DefaultAirRepository(clientFunc()),
+        temperatureRepository: () => new DefaultTemperatureRepository(clientFunc()),
+        humidityRepository: () => new DefaultHumidityRepository(clientFunc()),
+    };
+
+    const services: Services = {
+        lightService: () => new DefaultLightService(repositories.lightRepository()),
+        airService: () => new DefaultAirService(repositories.airRepository()),
+        temperatureService: () => new DefaultTemperatureService(repositories.temperatureRepository()),
+        humidityService: () => new DefaultHumidityService(repositories.humidityRepository()),
+    }
 
     if (config.allowRead)
-        setInterval(() => retrieveData(dbClient), 5000);
+        await retrieveData(clientFunc(), config.room, services);
 
     if (!config.allowApi)
         return;
@@ -48,7 +65,7 @@ async function run(config: ServerConfig)
     const app: Express = express();
 
     app.use(cors())
-    defineRoutes(app, dbClient);
+    defineRoutes(app, services);
     app.listen(config.port, () => console.log(`Server hört Anfragen auf Port ${config.port}`));
 }
 
@@ -59,6 +76,9 @@ function parseConfig(args: Map<string, any>): ServerConfig
 
     if (!args.has("-password"))
         throw new Error("Es wurde kein Password für den Datenbank Nutzer angegeben! 'npm run start -- -help' für mehr Informationen");
+
+    if (!args.has("-room"))
+        throw new Error("Es wurde kein Raum angegeben! 'npm run start -- -help' für mehr Informationen");
 
     //Die originalen Argumente sollen nicht mutiert werden
     const argsCopy: Map<string, any> = new Map(args);
@@ -82,13 +102,27 @@ function parseConfig(args: Map<string, any>): ServerConfig
         dbConnection: {host: argsCopy.get("--db"), password: argsCopy.get("-password")},
         port: argsCopy.get("--port"),
         allowApi: !argsCopy.get("--no-api"),
-        allowRead: !argsCopy.get("--no-read")
+        allowRead: !argsCopy.get("--no-read"),
+        room: argsCopy.get("-room")
     }
 }
 
-function retrieveData(dbClient: Client)
+async function retrieveData(dbClient: Client, roomName: string, services: Services)
 {
-    //TODO: Add services
+    await dbClient.connect();
+    const result = await dbClient.query<Room>(`select *
+                                               from room
+                                               where name = $1`, [roomName])
+    let room: Room;
+    if (result.rowCount != 0)
+        room = result.rows[0]
+    else
+    {
+        const roomQuery = await dbClient.query<Room>("insert into room(name) values($1) returning *", [roomName])
+        room = roomQuery.rows[0];
+    }
+    await dbClient.end();
+    void readLightData(room, services.lightService);
 }
 
 async function validateDatabase(dbClient: Client)
@@ -123,6 +157,7 @@ function reject(message: string, error: Error)
 
 type ServerConfig = {
     dbConnection: { host: string, password: string },
+    room: string,
     port: number,
     allowApi: boolean,
     allowRead: boolean
@@ -164,10 +199,22 @@ function printHelp()
    Argumente:
         (Benötigt)
              -password <Wert>             Das Passwort für den Datenbank Nutzer
+             -room <Wert>                 Der Raum in dem Die Messung stattfindet
         (Optional)
              --port <Wert>                Die Adresse, die für die Datenbank verwendet werden soll. Verwendet 'localhost' als Rückfallwert
              --db <Wert>                  Der Port, der für die Schnittstelle verwendet werden soll. Verwendet '3000' als Rückfallwert
              --no-api                     Der Server liefert keine api schnittstelle und sendet nur Daten an die Datenbank
              --no-read                    Der Server liest keine Daten aus
     `);
+}
+
+function getClient(host: string, user: string, password: string)
+{
+    return new Client({
+        host: host,
+        port: 5432,
+        database: 'roomsurveillancesystem',
+        user: user,
+        password: password,
+    });
 }

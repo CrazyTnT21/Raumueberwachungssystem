@@ -1,4 +1,5 @@
 import {Air} from "../../classes/air";
+import {Lazy} from "../../lazy";
 
 export interface AirService
 {
@@ -8,5 +9,5 @@ export interface AirService
 
     getItemsByTimespan(from: Date, to: Date, page: number, limit: number): Promise<Air[]>;
 
-    createItem(item: Air): Promise<Air>
+    createItem(item: Air): Promise<Lazy<Air>>
 }

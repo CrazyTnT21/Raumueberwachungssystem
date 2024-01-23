@@ -26,6 +26,6 @@ export class DefaultHumidityRepository  implements HumidityRepository
 
     async getLatestItem(): Promise<Humidity>
     {
-        return new Humidity(10, new Date(), new Room(""));
+        return new Humidity(10, new Date(), new Room(1,""));
     }
 }
