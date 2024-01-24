@@ -46,7 +46,8 @@
                 <h1><a href="/">Raumüberwachungssystem</a></h1>
                 <nav>
                     <ul>
-                        <li><a href="/CO2">CO2</a></li>
+                        <li><a href="/licht">Licht</a></li>
+                        <li><a href="/temperatur">Temperatur</a></li>
                         <li><a href="/Feuchtigkeit">Feuchtigkeit</a></li>
                         <li><a href="/Team">Team</a></li>
                     </ul>
