@@ -2,7 +2,6 @@
 import {defineRoutes, Services} from "./routes";
 import {Client} from "pg";
 import cors from 'cors';
-import {readLightData} from "./ads";
 import {Room} from "./classes/room";
 import {DefaultLightRepository} from "./repositories/default-light-repository";
 import {DefaultHumidityRepository} from "./repositories/default-humidity-repository";
@@ -12,6 +11,7 @@ import {DefaultLightService} from "./services/default-light-service";
 import {DefaultAirService} from "./services/default-air-service";
 import {DefaultTemperatureService} from "./services/default-temperature-service";
 import {DefaultHumidityService} from "./services/default-humidity-service";
+import {readLightData} from "./light-sensor";
 
 export const SERVER_URL: string = "localhost:3000";
 try
@@ -21,7 +21,7 @@ try
     if (args.has("-help"))
         printHelp();
     else
-        run(parseConfig(args));
+        void run(parseConfig(args));
 }
 catch (e: Error | any)
 {

@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/CrazyTnT21/School#readme",
   "dependencies": {
-    "ads1015": "^1.0.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "i2c-bus": "^5.2.3",
