@@ -1,12 +1,16 @@
 import {Humidity} from "../../classes/humidity";
+import {LazyPromise} from "../../lazy";
 
 export interface HumidityService
 {
-    getLatestItem(): Promise<Humidity>;
+    getLatestItem(roomName: string): Promise<Humidity>;
 
-    getItems(page: number, limit: number): Promise<Humidity[]>;
+    getItems(roomName: string, page: number, limit: number): Promise<{ total: number, items: Humidity[] }>;
 
-    getItemsByTimespan(from: Date, to: Date, page: number, limit: number): Promise<Humidity[]>;
+    getItemsByTimespan(roomName: string, from: Date, to: Date, page: number, limit: number): Promise<{
+        total: number,
+        items: Humidity[]
+    }>;
 
-    createItem(item: Humidity): Promise<Humidity>
+    createItem(item: Humidity): Promise<LazyPromise<Humidity>>
 }

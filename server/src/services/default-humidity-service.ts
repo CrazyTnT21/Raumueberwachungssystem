@@ -1,7 +1,7 @@
 import {Humidity} from "../classes/humidity";
-import {Room} from "../classes/room";
 import {HumidityService} from "./interfaces/humidity-service";
 import {HumidityRepository} from "../repositories/interfaces/humidity-repository";
+import {Lazy, LazyPromise} from "../lazy";
 
 export class DefaultHumidityService implements HumidityService
 {
@@ -9,23 +9,23 @@ export class DefaultHumidityService implements HumidityService
     {
     }
 
-    async createItem(item: Humidity): Promise<Humidity>
+    createItem(item: Humidity): Promise<LazyPromise<Humidity>>
     {
-        return item;
+        return this.humidityRepository.createItem(item);
     }
 
-    async getItems(page: number, limit: number): Promise<Humidity[]>
+    getItems(roomName: string,page: number, limit: number): Promise<{ total: number, items: Humidity[] }>
     {
-        return [];
+        return this.humidityRepository.getItems(roomName,page, limit);
     }
 
-    async getItemsByTimespan(from: Date, to: Date, page: number, limit: number): Promise<Humidity[]>
+    getItemsByTimespan(roomName: string,from: Date, to: Date, page: number, limit: number): Promise<{ total: number, items: Humidity[] }>
     {
-        return [];
+        return this.humidityRepository.getItemsByTimespan(roomName,from, to, page, limit);
     }
 
-    async getLatestItem(): Promise<Humidity>
+    getLatestItem(roomName: string,): Promise<Humidity>
     {
-        return new Humidity(0, new Date(), new Room(1,""));
+        return this.humidityRepository.getLatestItem(roomName);
     }
 }

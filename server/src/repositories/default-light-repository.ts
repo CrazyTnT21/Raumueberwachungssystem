@@ -1,51 +1,66 @@
 import {Client} from "pg";
 import {Light} from "../classes/light";
 import {LightRepository} from "./interfaces/light-repository";
-import {Lazy} from "../lazy";
+import {Lazy, LazyPromise} from "../lazy";
+import {Condition, Select, SortDirection} from "../db/select";
+import {airMapping} from "../db/mappings/air-mapping";
+import {lightMapping} from "../db/mappings/light-mapping";
 
 export class DefaultLightRepository implements LightRepository
 {
-    constructor(private readonly dbClient: Client)
+    constructor(private readonly dbClient: () => Client)
     {
     }
 
     private async getById(id: number): Promise<Light>
     {
-        await this.dbClient.connect();
-        const result = await this.dbClient.query<Light>("select * from light where id = $1", [id])
-        await this.dbClient.end();
-        return result.rows[0];
+        return await new Select(lightMapping)
+            .whereValue("id", id)
+            .single(this.dbClient());
     }
 
-    async getItems(page: number, limit: number): Promise<Light[]>
+    async getItems(roomName: string, page: number, limit: number): Promise<{ total: number, items: Light[] }>
     {
-        await this.dbClient.connect();
-        const result = await this.dbClient.query<Light>("select * from light limit $1 offset $2 * 50", [limit, page])
-        await this.dbClient.end();
-        return result.rows;
+        const select = new Select(lightMapping)
+            .whereValue("room.name", roomName,Condition.iLike);
+        const total = await select.count(this.dbClient());
+        const items = await select.offset(50 * page)
+            .limit(limit)
+            .list(this.dbClient());
+        return {total, items};
     }
 
-    async createItem(item: Light): Promise<Lazy<Promise<Light>>>
+    async createItem(item: Light): Promise<LazyPromise<Light>>
     {
-        await this.dbClient.connect();
-        const result = await this.dbClient.query<Light>("insert into light(value, measured, fkroom) values($1,$2,$3) returning *", [item.value, item.measured, item.room.id])
-        await this.dbClient.end();
-        return new Lazy(() => this.getById(result.rows[0].id));
+        const client = this.dbClient();
+        await client.connect();
+        const result = await client.query<Light>("insert into light(value, measured, fkroom) values($1,$2,$3) returning *", [item.value, item.measured, item.room.id])
+        await client.end();
+        return new LazyPromise(() => this.getById(result.rows[0].id));
     }
 
-    async getItemsByTimespan(from: Date, to: Date, page: number, limit: number): Promise<Light[]>
+    async getItemsByTimespan(roomName: string, from: Date, to: Date, page: number, limit: number): Promise<{
+        total: number,
+        items: Light[]
+    }>
     {
-        await this.dbClient.connect();
-        const result = await this.dbClient.query<Light>("select * from light where measured > $1 and $2 < $2 limit $3 offset $4 * 50", [from, to, limit, page])
-        await this.dbClient.end();
-        return result.rows;
+        const select = new Select(lightMapping)
+            .whereValue("measured", from, Condition.bigger)
+            .whereValue("measured", to, Condition.smaller)
+            .whereValue("room.name", roomName,Condition.iLike);
+        const total = await select.count(this.dbClient());
+        const items = await select.offset(50 * page)
+            .limit(limit)
+            .list(this.dbClient());
+        return {total, items};
     }
 
-    async getLatestItem(): Promise<Light>
+    async getLatestItem(roomName: string): Promise<Light>
     {
-        await this.dbClient.connect();
-        const result = await this.dbClient.query<Light>("select * from light order by id limit 1")
-        await this.dbClient.end();
-        return result.rows[0];
+        return await new Select(lightMapping)
+            .order("id", SortDirection.descending)
+            .limit(1)
+            .whereValue("room.name", roomName,Condition.iLike)
+            .single(this.dbClient());
     }
 }

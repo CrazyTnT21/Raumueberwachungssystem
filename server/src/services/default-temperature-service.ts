@@ -1,7 +1,7 @@
 import {Temperature} from "../classes/temperature";
-import {Room} from "../classes/room";
 import {TemperatureService} from "./interfaces/temperature-service";
 import {TemperatureRepository} from "../repositories/interfaces/temperature-repository";
+import {Lazy, LazyPromise} from "../lazy";
 
 export class DefaultTemperatureService implements TemperatureService
 {
@@ -9,23 +9,23 @@ export class DefaultTemperatureService implements TemperatureService
     {
     }
 
-    async createItem(item: Temperature): Promise<Temperature>
+    createItem(item: Temperature): Promise<LazyPromise<Temperature>>
     {
-        return item;
+        return this.temperatureRepository.createItem(item);
     }
 
-    async getItems(page: number, limit: number): Promise<Temperature[]>
+    getItems(roomName: string,page: number, limit: number): Promise<{ total: number, items: Temperature[] }>
     {
-        return []
+        return this.temperatureRepository.getItems(roomName,page, limit);
     }
 
-    async getItemsByTimespan(from: Date, to: Date, page: number, limit: number): Promise<Temperature[]>
+    getItemsByTimespan(roomName: string,from: Date, to: Date, page: number, limit: number): Promise<{ total: number, items: Temperature[] }>
     {
-        return []
+        return this.temperatureRepository.getItemsByTimespan(roomName,from, to, page, limit);
     }
 
-    async getLatestItem(): Promise<Temperature>
+    getLatestItem(roomName: string,): Promise<Temperature>
     {
-        return new Temperature(0, new Date(), new Room(1,""));
+        return this.temperatureRepository.getLatestItem(roomName);
     }
 }

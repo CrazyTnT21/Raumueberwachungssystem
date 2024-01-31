@@ -1,6 +1,5 @@
 import {LightService} from "../services/interfaces/light-service";
 import {Light} from "../classes/light";
-import {Room} from "../classes/room";
 
 export class LightController
 {
@@ -8,18 +7,22 @@ export class LightController
     {
     }
 
-    async getItems(req: any): Promise<Light[]>
+
+    async getItems(roomName: string, page: number, limit: number): Promise<{ total: number, items: Light[] }>
     {
-        return this.lightService.getItems(0,50)
+        return await this.lightService.getItems(roomName, page, limit);
     }
 
-    async getItemsByTimespan(from: Date, to: Date, page: number, limit: number): Promise<Light[]>
+    async getItemsByTimespan(roomName: string, from: Date, to: Date, page: number, limit: number): Promise<{
+        total: number,
+        items: Light[]
+    }>
     {
-        return [];
+        return this.lightService.getItemsByTimespan(roomName, from, to, page, limit);
     }
 
-    async getLatestItem(): Promise<Light>
+    async getLatestItem(roomName: string): Promise<Light | null>
     {
-        return new Light(0, new Date(), new Room(1,""));
+        return this.lightService.getLatestItem(roomName);
     }
 }

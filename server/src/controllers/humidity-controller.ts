@@ -1,6 +1,5 @@
-import {Room} from "../classes/room";
-import {Humidity} from "../classes/humidity";
 import {HumidityService} from "../services/interfaces/humidity-service";
+import {Humidity} from "../classes/humidity";
 
 export class HumidityController
 {
@@ -8,23 +7,22 @@ export class HumidityController
     {
     }
 
-    async createItem(req: any): Promise<Humidity>
+
+    async getItems(roomName: string, page: number, limit: number): Promise<{ total: number, items: Humidity[] }>
     {
-        return <Humidity>{};
+        return await this.humidityService.getItems(roomName, page, limit);
     }
 
-    async getItems(req: any): Promise<Humidity[]>
+    async getItemsByTimespan(roomName: string, from: Date, to: Date, page: number, limit: number): Promise<{
+        total: number,
+        items: Humidity[]
+    }>
     {
-        return [];
+        return this.humidityService.getItemsByTimespan(roomName, from, to, page, limit);
     }
 
-    async getItemsByTimespan(from: Date, to: Date, page: number, limit: number): Promise<Humidity[]>
+    async getLatestItem(roomName: string): Promise<Humidity | null>
     {
-        return [];
-    }
-
-    async getLatestItem(): Promise<Humidity>
-    {
-        return new Humidity(0, new Date(), new Room(1, ""));
+        return this.humidityService.getLatestItem(roomName);
     }
 }

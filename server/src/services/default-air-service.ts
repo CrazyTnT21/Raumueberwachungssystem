@@ -1,8 +1,7 @@
 import {Air} from "../classes/air";
-import {AirRepository} from "../repositories/interfaces/air-repository";
 import {AirService} from "./interfaces/air-service";
-import {Room} from "../classes/room";
-import {Lazy} from "../lazy";
+import {AirRepository} from "../repositories/interfaces/air-repository";
+import {Lazy, LazyPromise} from "../lazy";
 
 export class DefaultAirService implements AirService
 {
@@ -10,23 +9,23 @@ export class DefaultAirService implements AirService
     {
     }
 
-    async createItem(item: Air): Promise<Lazy<Air>>
+    createItem(item: Air): Promise<LazyPromise<Air>>
     {
-        return new Lazy(() => item);
+        return this.airRepository.createItem(item);
     }
 
-    async getItems(page: number, limit: number): Promise<Air[]>
+    getItems(roomName: string,page: number, limit: number): Promise<{ total: number, items: Air[] }>
     {
-        return [];
+        return this.airRepository.getItems(roomName,page, limit);
     }
 
-    async getItemsByTimespan(from: Date, to: Date, page: number, limit: number): Promise<Air[]>
+    getItemsByTimespan(roomName: string,from: Date, to: Date, page: number, limit: number): Promise<{ total: number, items: Air[] }>
     {
-        return [];
+        return this.airRepository.getItemsByTimespan(roomName,from, to, page, limit);
     }
 
-    async getLatestItem(): Promise<Air>
+    getLatestItem(roomName: string,): Promise<Air>
     {
-        return new Air(0, new Date(), new Room(1,""));
+        return this.airRepository.getLatestItem(roomName);
     }
 }

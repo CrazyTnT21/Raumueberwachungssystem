@@ -12,6 +12,9 @@ import {DefaultAirService} from "./services/default-air-service";
 import {DefaultTemperatureService} from "./services/default-temperature-service";
 import {DefaultHumidityService} from "./services/default-humidity-service";
 import {readLightData} from "./light-sensor";
+import {DefaultRoomService} from "./services/default-room-service";
+import {DefaultRoomRepository} from "./repositories/default-room-repository";
+import {readHumidityAndTemperature} from "./dht11-sensor";
 
 export const SERVER_URL: string = "localhost:3000";
 try
@@ -43,10 +46,11 @@ async function run(config: ServerConfig)
         return;
     }
     const repositories = {
-        lightRepository: () => new DefaultLightRepository(clientFunc()),
-        airRepository: () => new DefaultAirRepository(clientFunc()),
-        temperatureRepository: () => new DefaultTemperatureRepository(clientFunc()),
-        humidityRepository: () => new DefaultHumidityRepository(clientFunc()),
+        lightRepository: () => new DefaultLightRepository(clientFunc),
+        airRepository: () => new DefaultAirRepository(clientFunc),
+        temperatureRepository: () => new DefaultTemperatureRepository(clientFunc),
+        humidityRepository: () => new DefaultHumidityRepository(clientFunc),
+        roomRepository: () => new DefaultRoomRepository(clientFunc)
     };
 
     const services: Services = {
@@ -54,6 +58,7 @@ async function run(config: ServerConfig)
         airService: () => new DefaultAirService(repositories.airRepository()),
         temperatureService: () => new DefaultTemperatureService(repositories.temperatureRepository()),
         humidityService: () => new DefaultHumidityService(repositories.humidityRepository()),
+        roomService: () => new DefaultRoomService(repositories.roomRepository())
     }
 
     if (config.allowRead)
@@ -112,7 +117,7 @@ async function retrieveData(dbClient: Client, roomName: string, services: Servic
     await dbClient.connect();
     const result = await dbClient.query<Room>(`select *
                                                from room
-                                               where name = $1`, [roomName])
+                                               where name ilike $1`, [roomName])
     let room: Room;
     if (result.rowCount != 0)
         room = result.rows[0]
@@ -123,6 +128,7 @@ async function retrieveData(dbClient: Client, roomName: string, services: Servic
     }
     await dbClient.end();
     void readLightData(room, services.lightService);
+    void readHumidityAndTemperature(room, services.humidityService,services.temperatureService);
 }
 
 async function validateDatabase(dbClient: Client)

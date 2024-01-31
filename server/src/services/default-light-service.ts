@@ -1,7 +1,7 @@
 import {Light} from "../classes/light";
 import {LightService} from "./interfaces/light-service";
 import {LightRepository} from "../repositories/interfaces/light-repository";
-import {Lazy} from "../lazy";
+import {Lazy, LazyPromise} from "../lazy";
 
 export class DefaultLightService implements LightService
 {
@@ -9,37 +9,23 @@ export class DefaultLightService implements LightService
     {
     }
 
-    createItem(item: Light): Promise<Lazy<Promise<Light>>>
+    createItem(item: Light): Promise<LazyPromise<Light>>
     {
         return this.lightRepository.createItem(item);
     }
 
-    getItems(page: number, limit: number): Promise<Light[]>
+    getItems(roomName: string,page: number, limit: number): Promise<{ total: number, items: Light[] }>
     {
-        return this.lightRepository.getItems(getPage(page), getLimit(limit));
+        return this.lightRepository.getItems(roomName,page, limit);
     }
 
-    getItemsByTimespan(from: Date, to: Date, page: number, limit: number): Promise<Light[]>
+    getItemsByTimespan(roomName: string,from: Date, to: Date, page: number, limit: number): Promise<{ total: number, items: Light[] }>
     {
-        return this.lightRepository.getItemsByTimespan(from, to, getPage(page), getLimit(limit));
+        return this.lightRepository.getItemsByTimespan(roomName,from, to, page, limit);
     }
 
-    getLatestItem(): Promise<Light>
+    getLatestItem(roomName: string,): Promise<Light>
     {
-        return this.lightRepository.getLatestItem();
+        return this.lightRepository.getLatestItem(roomName);
     }
-}
-
-export function getPage(page: number)
-{
-    if (page < 50000 && page >= 0)
-        return page;
-    return 0;
-}
-
-export function getLimit(limit: number)
-{
-    if (limit < 50 && limit >= 0)
-        return limit;
-    return 50;
 }

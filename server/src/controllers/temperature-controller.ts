@@ -1,6 +1,5 @@
 import {TemperatureService} from "../services/interfaces/temperature-service";
 import {Temperature} from "../classes/temperature";
-import {Room} from "../classes/room";
 
 export class TemperatureController
 {
@@ -8,23 +7,22 @@ export class TemperatureController
     {
     }
 
-    async createItem(req: any): Promise<Temperature>
+
+    async getItems(roomName: string, page: number, limit: number): Promise<{ total: number, items: Temperature[] }>
     {
-        return <Temperature>{};
+        return await this.temperatureService.getItems(roomName, page, limit);
     }
 
-    async getItems(req: any): Promise<Temperature[]>
+    async getItemsByTimespan(roomName: string, from: Date, to: Date, page: number, limit: number): Promise<{
+        total: number,
+        items: Temperature[]
+    }>
     {
-        return [];
+        return this.temperatureService.getItemsByTimespan(roomName, from, to, page, limit);
     }
 
-    async getItemsByTimespan(from: Date, to: Date, page: number, limit: number): Promise<Temperature[]>
+    async getLatestItem(roomName: string): Promise<Temperature | null>
     {
-        return [];
-    }
-
-    async getLatestItem(): Promise<Temperature>
-    {
-        return new Temperature(0, new Date(), new Room(1, ""));
+        return this.temperatureService.getLatestItem(roomName);
     }
 }

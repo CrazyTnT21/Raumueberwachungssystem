@@ -1,14 +1,16 @@
 import {Light} from "../../classes/light";
-import {Lazy} from "../../lazy";
-
+import {LazyPromise} from "../../lazy";
 
 export interface LightService
 {
-    getLatestItem(): Promise<Light>;
+    getLatestItem(roomName: string): Promise<Light>;
 
-    getItems(page: number, limit: number): Promise<Light[]>;
+    getItems(roomName: string, page: number, limit: number): Promise<{ total: number, items: Light[] }>;
 
-    getItemsByTimespan(from: Date, to: Date, page: number, limit: number): Promise<Light[]>;
+    getItemsByTimespan(roomName: string, from: Date, to: Date, page: number, limit: number): Promise<{
+        total: number,
+        items: Light[]
+    }>;
 
-    createItem(item: Light): Promise<Lazy<Promise<Light>>>
+    createItem(item: Light): Promise<LazyPromise<Light>>
 }

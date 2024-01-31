@@ -2,13 +2,15 @@ export class Endpoint<T>
 {
     items: T[];
     count: number;
+    total: number;
     links: Link[];
 
-    constructor(items: T[], links: Link[])
+    constructor(items: T[], links: Link[],total: number)
     {
         this.items = items;
         this.count = this.items.length;
         this.links = links;
+        this.total = total;
     }
 }
 
