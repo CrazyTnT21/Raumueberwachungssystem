@@ -1,2 +1,2 @@
-export const readDelay = 5000 //5 Sekunden
-export const printRead = true;
+export const readDelay = 10000 //10 Sekunden
+export const printRead = false;

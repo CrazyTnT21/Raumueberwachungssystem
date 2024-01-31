@@ -7,6 +7,7 @@ import {HumidityService} from "./services/interfaces/humidity-service";
 import {Humidity} from "./classes/humidity";
 import {TemperatureService} from "./services/interfaces/temperature-service";
 import {Temperature} from "./classes/temperature";
+import {average} from "./light-sensor";
 
 export async function readHumidityAndTemperature(room: Room, humidityService: () => HumidityService, temperatureService: () => TemperatureService)
 {
@@ -16,17 +17,32 @@ export async function readHumidityAndTemperature(room: Room, humidityService: ()
         await sleep(delay);
         try
         {
-            const res = await sensor.read(11, dhtPin);
+            const startAfterFiveSeconds = new Date();
+            const valuesHumidity: number[] = []
+            const valuesTemperature: number[] = []
+            startAfterFiveSeconds.setMilliseconds(startAfterFiveSeconds.getMilliseconds() + delay);
+
+            while (new Date() < startAfterFiveSeconds)
+            {
+                const res = await sensor.read(11, dhtPin);
+
+                valuesHumidity.push(res.humidity);
+                valuesTemperature.push(res.temperature);
+            }
+
+            const averageTemperature = average(valuesTemperature);
+            const averageHumidity = average(valuesHumidity);
             if (printRead)
             {
                 console.log(
-                    `Temperatur: ${res.temperature.toFixed(1)}°C, ` +
-                    `Feuchtigkeit: ${res.humidity.toFixed(1)}%`
+                    `(${new Date().toUTCString()}) ` +
+                    `Temperatur: ${averageTemperature.toFixed(1)}°C, ` +
+                    `Feuchtigkeit: ${averageHumidity.toFixed(1)}%`
                 );
             }
 
-            await humidityService().createItem(new Humidity(res.humidity, new Date(), room))
-            await temperatureService().createItem(new Temperature(res.temperature, new Date(), room))
+            await humidityService().createItem(new Humidity(averageHumidity, new Date(), room))
+            await temperatureService().createItem(new Temperature(averageTemperature, new Date(), room))
 
             if (delay > readDelay)
                 delay -= 1000;

@@ -1,21 +1,61 @@
 ﻿<!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1"/>
-    <link href="assets/styles.css" rel="stylesheet">
-    <title>Team</title>
-</head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1"/>
+  <link href="/assets/styles.css" rel="stylesheet">
+  <title>Team</title>
+  <style>
+    .center {
+      display: flex;
+      list-style: none;
+      align-items: center;
+      justify-content: center;
+    }
 
+    li {
+      padding: 5px;
+    }
+    .pad {
+      padding: 5px
+    }
+    ul {
+      padding: 0;
+    }
+    h1 {
+      margin: 0;
+    }
+  </style>
+</head>
 <body>
 <app-header></app-header>
 
-<ul>
-    <li><div>Daniel</div> <img src="/assets/platz.jpg"width="150px"  alt="Daniel"></li>
-    <li><div>Miguel</div> <img src="/assets/platz.jpg"width="150px"  alt="Miguel"></li>
-    <li><div>Mark</div> <img src="/assets/mark.stoe.jpg"width="150px"  alt="Mark"></li>
-    <li><div>Malte</div> <img src="/assets/platz.jpg"width="150px"  alt="Malte"></li>
-    <li><div>Finn</div> <img src="/assets/platz.jpg"width="150px"  alt="Finn"></li>
-    <li><div>Huy</div> <img src="/assets/platz.jpg"width="150px"  alt="Huy"></li>
+<div class="center pad">
+  <div style="width: 300px">
+    <img src="/assets/mark.stoe.jpg" style="width: 100%" alt="Mark">
+    <h1 class="center">Mark</h1>
+  </div>
+</div>
+<ul class="center">
+  <li>
+    <div class="center">Daniel</div>
+    <img src="/assets/platz.jpg" width="50" alt="Daniel">
+  </li>
+  <li>
+    <div class="center">Miguel</div>
+    <img src="/assets/platz.jpg" width="50" alt="Miguel">
+  </li>
+  <li>
+    <div class="center">Malte</div>
+    <img src="/assets/platz.jpg" width="50" alt="Malte">
+  </li>
+  <li>
+    <div class="center">Finn</div>
+    <img src="/assets/platz.jpg" width="50" alt="Finn">
+  </li>
+  <li>
+    <div class="center">Huy</div>
+    <img src="/assets/platz.jpg" width="50" alt="Huy">
+  </li>
 </ul>
 
 

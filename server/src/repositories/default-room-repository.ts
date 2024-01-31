@@ -22,12 +22,9 @@ export class DefaultRoomRepository implements RoomRepository
     {
         const select = new Select(roomMapping);
 
-        console.log(search)
         if (search && search != "")
-        {
-            console.log("ADDING")
             select.whereValue("name", "%" + search + "%", Condition.iLike);
-        }
+        
         const total = await select.count(this.dbClient());
         const items = await select.offset(50 * page)
             .limit(limit)

@@ -29,11 +29,11 @@ export function defineRoutes(app: Express, services: Services)
     defineRoomRoute(app, services.roomService);
 }
 
-function transformEndpoint<T>(path: string, total: number, items: T[], page: number): Endpoint<T>
+function transformEndpoint<T>(routePath: string, total: number, items: T[], page: number): Endpoint<T>
 {
-    const previous = page == 0 ? null : (path + "?page=" + (page - 1));
-    const next = total <= (page * 50 + items.length) ? null : (path + "?page=" + (page + 1));
-    const links: Link[] = [new Link(SERVER_URL, path, previous, next)]
+    const previous = page == 0 ? null : (SERVER_URL + routePath + "?page=" + (page - 1));
+    const next = total <= (page * 50 + items.length) ? null : SERVER_URL + routePath + "?page=" + (page + 1);
+    const links: Link[] = [new Link(SERVER_URL, SERVER_URL + routePath, previous, next)]
 
     return new Endpoint(items, links, total);
 }
@@ -76,8 +76,8 @@ function defineLightRoute(app: Express, lightService: () => LightService)
         }
 
         const room = req.params.room;
-        const from = new Date(Number(req.params.from) * 1000);
-        const to = Number.isInteger(Number(req.params.to)) ? new Date(Number(req.params.to) * 1000) : new Date();
+        const from = new Date(Number(req.params.from));
+        const to = Number.isInteger(Number(req.params.to)) ? new Date(Number(req.params.to)) : new Date();
         const page = getPage(<string>req.query.page);
         const limit = getLimit(<string>req.query.limit);
 
@@ -128,8 +128,8 @@ function defineAirRoute(app: Express, airService: () => AirService)
         }
 
         const room = req.params.room;
-        const from = new Date(Number(req.params.from) * 1000);
-        const to = Number.isInteger(Number(req.params.to)) ? new Date(Number(req.params.to) * 1000) : new Date();
+        const from = new Date(Number(req.params.from));
+        const to = Number.isInteger(Number(req.params.to)) ? new Date(Number(req.params.to)) : new Date();
         const page = getPage(<string>req.query.page);
         const limit = getLimit(<string>req.query.limit);
 
@@ -173,8 +173,8 @@ function defineTemperatureRoute(app: Express, temperatureService: () => Temperat
         }
 
         const room = req.params.room;
-        const from = new Date(Number(req.params.from) * 1000);
-        const to = Number.isInteger(Number(req.params.to)) ? new Date(Number(req.params.to) * 1000) : new Date();
+        const from = new Date(Number(req.params.from));
+        const to = Number.isInteger(Number(req.params.to)) ? new Date(Number(req.params.to)) : new Date();
         const page = getPage(<string>req.query.page);
         const limit = getLimit(<string>req.query.limit);
 
@@ -218,8 +218,8 @@ function defineHumidityRoute(app: Express, humidityService: () => HumidityServic
         }
 
         const room = req.params.room;
-        const from = new Date(Number(req.params.from) * 1000);
-        const to = Number.isInteger(Number(req.params.to)) ? new Date(Number(req.params.to) * 1000) : new Date();
+        const from = new Date(Number(req.params.from));
+        const to = Number.isInteger(Number(req.params.to)) ? new Date(Number(req.params.to)) : new Date();
         const page = getPage(<string>req.query.page);
         const limit = getLimit(<string>req.query.limit);
 

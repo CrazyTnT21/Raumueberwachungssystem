@@ -4,7 +4,6 @@ import {LightService} from "./services/interfaces/light-service";
 import {Light} from "./classes/light";
 import {Room} from "./classes/room";
 import {ads1115} from "./ads1115";
-import {sleep} from "./helper";
 import {printRead, readDelay} from "./config";
 
 export async function readLightData(room: Room, lightService: () => LightService)
@@ -14,26 +13,49 @@ export async function readLightData(room: Room, lightService: () => LightService
 
     const ads = new ads1115(bus);
     await ads.open(1);
-    ads.gain = 1;
+    ads.gain = 2 / 3;
     while (true)
     {
         try
         {
-            await sleep(delay);
-            const value = await ads.measure(lightPin + "+GND");
+            const startAfterFiveSeconds = new Date();
+            const values: number[] = []
+            startAfterFiveSeconds.setMilliseconds(startAfterFiveSeconds.getMilliseconds() + delay);
 
+            while (new Date() < startAfterFiveSeconds)
+            {
+                const value = await ads.measure(lightPin + "+GND");
+
+                values.push(value);
+            }
+
+            const averageValue = average(values);
             if (printRead)
-                console.log(`Light sensor: ${value}`)
+                console.log(`(${new Date().toUTCString()}) ` + `Light sensor: ${averageValue.toFixed(1)}`)
 
-            await lightService().createItem(new Light(value, new Date(), room))
+            await lightService().createItem(new Light(averageValue, new Date(), room))
 
             if (delay > readDelay)
                 delay -= 1000;
         }
         catch (e)
         {
-           console.error(e);
+            console.error(e);
             delay += 1000;
         }
     }
+}
+
+export function average(values: number[])
+{
+    if (values.length == 0)
+        throw new Error("Missing values");
+
+    let intermediateValue = values[0];
+
+    for (let i = 1; i < values.length; i++)
+    {
+        intermediateValue += values[i];
+    }
+    return intermediateValue / values.length;
 }

@@ -1,6 +1,5 @@
-﻿import {Client, Query} from "pg";
+﻿import {Client} from "pg";
 import {KeyJoin, Mapping} from "../mapping";
-import {roomMapping} from "./mappings/room-mapping";
 
 export class ExpandedKeyJoin<T>
 {
@@ -346,7 +345,6 @@ export class Select<T>
         if (this._limit)
             query += " LIMIT " + this._limit;
 
-        console.log(query)
         return {text: query, parameters: values};
     }
 
