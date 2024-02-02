@@ -5,6 +5,7 @@ import {Light} from "./classes/light";
 import {Room} from "./classes/room";
 import {ads1115} from "./ads1115";
 import {printRead, readDelay} from "./config";
+import {sleep} from "./helper";
 
 export async function readLightData(room: Room, lightService: () => LightService)
 {
@@ -27,6 +28,7 @@ export async function readLightData(room: Room, lightService: () => LightService
                 const value = await ads.measure(lightPin + "+GND");
 
                 values.push(value);
+                await sleep(100);
             }
 
             const averageValue = average(values);

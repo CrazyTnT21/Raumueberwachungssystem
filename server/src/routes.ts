@@ -279,17 +279,18 @@ export function getPage(page: number | string | undefined | null)
     return 0;
 }
 
-export function getLimit(limit: number | string | undefined | null)
+export function getLimit(value: number | string | undefined | null)
 {
-    if (!limit)
-        return 50;
+    if (!value)
+        return maxLimit;
 
-    limit = Number(limit);
-    if (!Number.isInteger(limit))
+    value = Number(value);
+    if (!Number.isInteger(value))
     {
-        return 50;
+        return maxLimit;
     }
-    if (limit < 50 && limit >= 0)
-        return <number>limit;
-    return 50;
+    if (value < maxLimit && value >= 0)
+        return <number>value;
+    return maxLimit;
 }
+export const maxLimit = 150;

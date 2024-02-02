@@ -4,6 +4,7 @@ import {RoomRepository} from "./interfaces/room-repository";
 import {LazyPromise} from "../lazy";
 import {Condition, Select} from "../db/select";
 import {roomMapping} from "../db/mappings/room-mapping";
+import {maxLimit} from "../routes";
 
 export class DefaultRoomRepository implements RoomRepository
 {
@@ -24,9 +25,9 @@ export class DefaultRoomRepository implements RoomRepository
 
         if (search && search != "")
             select.whereValue("name", "%" + search + "%", Condition.iLike);
-        
+
         const total = await select.count(this.dbClient());
-        const items = await select.offset(50 * page)
+        const items = await select.offset(maxLimit * page)
             .limit(limit)
             .list(this.dbClient());
         return {total, items};

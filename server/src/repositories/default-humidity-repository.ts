@@ -4,6 +4,7 @@ import {HumidityRepository} from "./interfaces/humidity-repository";
 import {LazyPromise} from "../lazy";
 import {Condition, Select, SortDirection} from "../db/select";
 import {humidityMapping} from "../db/mappings/humidity-mapping";
+import {maxLimit} from "../routes";
 
 export class DefaultHumidityRepository implements HumidityRepository
 {
@@ -23,7 +24,7 @@ export class DefaultHumidityRepository implements HumidityRepository
         const select = new Select(humidityMapping)
             .whereValue("room.name", roomName, Condition.iLike);
         const total = await select.count(this.dbClient());
-        const items = await select.offset(50 * page)
+        const items = await select.offset(maxLimit * page)
             .limit(limit)
             .list(this.dbClient());
         return {total, items};
@@ -48,7 +49,7 @@ export class DefaultHumidityRepository implements HumidityRepository
             .whereValue("measured", to, Condition.smaller)
             .whereValue("room.name", roomName, Condition.iLike);
         const total = await select.count(this.dbClient());
-        const items = await select.offset(50 * page)
+        const items = await select.offset(maxLimit * page)
             .limit(limit)
             .list(this.dbClient());
         return {total, items};

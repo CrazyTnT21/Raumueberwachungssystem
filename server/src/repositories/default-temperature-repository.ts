@@ -1,10 +1,10 @@
 import {Client} from "pg";
 import {Temperature} from "../classes/temperature";
 import {TemperatureRepository} from "./interfaces/temperature-repository";
-import {Lazy, LazyPromise} from "../lazy";
+import {LazyPromise} from "../lazy";
 import {Condition, Select, SortDirection} from "../db/select";
-import {airMapping} from "../db/mappings/air-mapping";
 import {temperatureMapping} from "../db/mappings/temperature-mapping";
+import {maxLimit} from "../routes";
 
 export class DefaultTemperatureRepository implements TemperatureRepository
 {
@@ -22,9 +22,9 @@ export class DefaultTemperatureRepository implements TemperatureRepository
     async getItems(roomName: string, page: number, limit: number): Promise<{ total: number, items: Temperature[] }>
     {
         const select = new Select(temperatureMapping)
-            .whereValue("room.name", roomName,Condition.iLike);
+            .whereValue("room.name", roomName, Condition.iLike);
         const total = await select.count(this.dbClient());
-        const items = await select.offset(50 * page)
+        const items = await select.offset(maxLimit * page)
             .limit(limit)
             .list(this.dbClient());
         return {total, items};
@@ -47,9 +47,9 @@ export class DefaultTemperatureRepository implements TemperatureRepository
         const select = new Select(temperatureMapping)
             .whereValue("measured", from, Condition.bigger)
             .whereValue("measured", to, Condition.smaller)
-            .whereValue("room.name", roomName,Condition.iLike);
+            .whereValue("room.name", roomName, Condition.iLike);
         const total = await select.count(this.dbClient());
-        const items = await select.offset(50 * page)
+        const items = await select.offset(maxLimit * page)
             .limit(limit)
             .list(this.dbClient());
         return {total, items};
@@ -60,7 +60,7 @@ export class DefaultTemperatureRepository implements TemperatureRepository
         return await new Select(temperatureMapping)
             .order("id", SortDirection.descending)
             .limit(1)
-            .whereValue("room.name", roomName,Condition.iLike)
+            .whereValue("room.name", roomName, Condition.iLike)
             .single(this.dbClient());
     }
 }

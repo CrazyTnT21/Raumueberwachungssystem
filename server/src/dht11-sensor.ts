@@ -28,6 +28,7 @@ export async function readHumidityAndTemperature(room: Room, humidityService: ()
 
                 valuesHumidity.push(res.humidity);
                 valuesTemperature.push(res.temperature);
+                await sleep(100);
             }
 
             const averageTemperature = average(valuesTemperature);

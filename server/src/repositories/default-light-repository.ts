@@ -1,10 +1,10 @@
 import {Client} from "pg";
 import {Light} from "../classes/light";
 import {LightRepository} from "./interfaces/light-repository";
-import {Lazy, LazyPromise} from "../lazy";
+import {LazyPromise} from "../lazy";
 import {Condition, Select, SortDirection} from "../db/select";
-import {airMapping} from "../db/mappings/air-mapping";
 import {lightMapping} from "../db/mappings/light-mapping";
+import {maxLimit} from "../routes";
 
 export class DefaultLightRepository implements LightRepository
 {
@@ -22,9 +22,9 @@ export class DefaultLightRepository implements LightRepository
     async getItems(roomName: string, page: number, limit: number): Promise<{ total: number, items: Light[] }>
     {
         const select = new Select(lightMapping)
-            .whereValue("room.name", roomName,Condition.iLike);
+            .whereValue("room.name", roomName, Condition.iLike);
         const total = await select.count(this.dbClient());
-        const items = await select.offset(50 * page)
+        const items = await select.offset(maxLimit * page)
             .limit(limit)
             .list(this.dbClient());
         return {total, items};
@@ -47,9 +47,9 @@ export class DefaultLightRepository implements LightRepository
         const select = new Select(lightMapping)
             .whereValue("measured", from, Condition.bigger)
             .whereValue("measured", to, Condition.smaller)
-            .whereValue("room.name", roomName,Condition.iLike);
+            .whereValue("room.name", roomName, Condition.iLike);
         const total = await select.count(this.dbClient());
-        const items = await select.offset(50 * page)
+        const items = await select.offset(maxLimit * page)
             .limit(limit)
             .list(this.dbClient());
         return {total, items};
@@ -60,7 +60,7 @@ export class DefaultLightRepository implements LightRepository
         return await new Select(lightMapping)
             .order("id", SortDirection.descending)
             .limit(1)
-            .whereValue("room.name", roomName,Condition.iLike)
+            .whereValue("room.name", roomName, Condition.iLike)
             .single(this.dbClient());
     }
 }
