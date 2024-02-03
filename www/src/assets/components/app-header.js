@@ -42,7 +42,7 @@ class AppHeader extends HTMLElement
             <li><a href="/Team">Team</a></li>
           </ul>
         </nav>
-        <ul id="rooms">
+        <ul style="width: 100%" id="rooms">
 
         </ul>
       </header>
@@ -54,10 +54,13 @@ class AppHeader extends HTMLElement
     //language=CSS
     return `
       header {
+        display: flex;
         background-color: #333;
         color: #fff;
         padding: 20px;
         text-align: center;
+        flex-wrap: wrap;
+        max-height: 100px;
       }
 
       h1 {
@@ -68,14 +71,15 @@ class AppHeader extends HTMLElement
       ul {
         list-style: none;
         padding: 0;
+        margin-bottom: 0;
       }
 
       li {
         display: inline;
-        margin: 5px;
       }
 
       a {
+        padding: 5px;
         color: #fff;
         text-decoration: none;
       }
@@ -86,6 +90,21 @@ class AppHeader extends HTMLElement
 
       li a:hover {
         color: #ccc;
+      }
+
+      nav,
+      ul,
+      li,
+      a {
+        display: flex;
+      }
+
+      li > a:hover {
+        font-size: 22px;
+      }
+
+      h1 > a:hover {
+        font-size: 38px;
       }
     `;
   }

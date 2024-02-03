@@ -32,7 +32,7 @@ export function defineRoutes(app: Express, services: Services)
 function transformEndpoint<T>(routePath: string, total: number, items: T[], page: number): Endpoint<T>
 {
     const previous = page == 0 ? null : (SERVER_URL + routePath + "?page=" + (page - 1));
-    const next = total <= (page * 50 + items.length) ? null : SERVER_URL + routePath + "?page=" + (page + 1);
+    const next = total <= (page * maxLimit + items.length) ? null : SERVER_URL + routePath + "?page=" + (page + 1);
     const links: Link[] = [new Link(SERVER_URL, SERVER_URL + routePath, previous, next)]
 
     return new Endpoint(items, links, total);
@@ -293,4 +293,4 @@ export function getLimit(value: number | string | undefined | null)
         return <number>value;
     return maxLimit;
 }
-export const maxLimit = 150;
+export const maxLimit = 500;

@@ -2,12 +2,11 @@ import {getCurrentRoom} from "../assets/components/app-header.js";
 import {createChart, defaultOptions} from "../assets/scripts/helpers/chartHelper.js";
 import {dayTimespan, minutesAgo} from "../assets/scripts/helpers/dateHelper.js";
 import {getUntilItemCount} from "../assets/scripts/helpers/endpointHelper.js";
-import {updateRecentValue} from "./licht-exports.js";
-
+import {updateRecentValue} from "./feuchtigkeit-exports.js";
 
 async function getTimeSpan(roomName, from, to)
 {
-  const url = "light/" + roomName + "/" + from.getTime() + "-" + to.getTime();
+  const url = "humidity/" + roomName + "/" + from.getTime() + "-" + to.getTime();
   return await getUntilItemCount(url);
 }
 
@@ -16,24 +15,24 @@ function createChartObject(element, items)
   const data = {
     labels: items.map(item => new Date(item.measured).toLocaleTimeString()),
     datasets: [{
-      label: "Licht",
-      data: items.map(item => item.value.toFixed(0)),
+      label: "Feuchtigkeit",
+      data: items.map(item => item.valuePercentage.toFixed(2)),
       borderWidth: 1,
     }],
   };
-  const lightOptions = {
+  const humidityOptions = {
     ...defaultOptions,
     scales: {
       y: {
-        max: 40000,
-        min: 15000,
+        max: 80,
+        min: 10,
         border: {
           display: false,
         },
       },
     },
   };
-  createChart(element, data, lightOptions);
+  createChart(element, data, humidityOptions);
 }
 
 const header = document.querySelector("app-header");
@@ -63,7 +62,7 @@ button.addEventListener("click", async () =>
 {
   const from = document.querySelector("#from");
   const to = document.querySelector("#to");
-
+  console.log(from, to);
   if (!from.value || !to.value)
     return;
 
@@ -73,19 +72,17 @@ button.addEventListener("click", async () =>
   if (!isNaN(fromValue.getTime()) && !isNaN(toValue.getTime()))
   {
     const items = await getTimeSpan(room, fromValue, toValue);
-
     const data = {
       labels: items.map(item => new Date(item.measured).toLocaleTimeString()),
       datasets: [{
-        label: "Licht",
-        data: items.map(item => item.value.toFixed(0)),
+        label: "Feuchtigkeit",
+        data: items.map(item => item.valuePercentage.toFixed(2)),
         borderWidth: 1,
       }],
     };
     createChart(document.querySelector("#customTimespanChart"), data);
   }
 });
-
 
 const customDay = document.querySelector("#customDay");
 
@@ -101,12 +98,12 @@ customDay.addEventListener("change", async e =>
   createChartObject(customDayChart, items);
 });
 if (room)
-  void updateRecentValue(room,document.querySelector("#currentValue"));
+  void updateRecentValue(room);
 
 setInterval(async () =>
 {
   const room = getCurrentRoom();
   if (room)
-    await updateRecentValue(room,document.querySelector("#currentValue"));
+    await updateRecentValue(room);
 }, 5000);
 

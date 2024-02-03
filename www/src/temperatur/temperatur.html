@@ -3,42 +3,62 @@
 <head>
   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1"/>
   <link href="/assets/styles.css" rel="stylesheet">
-  <title>Startseite</title>
+  <title>Temperatur - Raumüberwachungssystem</title>
 </head>
-
 <body>
 <app-header data-choose></app-header>
-<div hidden="hidden">
-  <h1>Aktueller Wert</h1>
-  <div id="currentValue"></div>
-</div>
-<h1>Letzte 10 Minuten</h1>
-<div style="width: 33%; padding: 10px">
-  <canvas id="myChart"></canvas>
-</div>
-<h1>Letzte 60 Minuten</h1>
-<div style="height: 50%; padding: 10px">
-  <canvas id="myChart2"></canvas>
-</div>
-<h1>Letzte 24 Stunden</h1>
-<div style="height: 50%; padding: 10px">
-  <canvas id="myChart3"></canvas>
-</div>
-<h1>Letzte 7 Tage</h1>
-<div style="height: 50%; padding: 10px">
-  <canvas id="myChart4"></canvas>
-</div>
-<h1>Eigener Zeitraum</h1>
-<label for="from">Von</label>
-<input id="from">
-<label for="to">Bis</label>
-<input id="to">
-<button>Erstellen</button>
-<div style="height: 50%; padding: 10px">
-  <canvas id="myChart5"></canvas>
-</div>
+<main class="row">
+  <div hidden="hidden" class="center pad">
+    <div>
+      <h1>Letzter Wert</h1>
+      <div id="currentValue"></div>
+    </div>
+  </div>
+  <div class="row pad">
+    <div class="half">
+      <h1 class="row">Letzte 10 Minuten</h1>
+      <canvas class="row" id="tenMinutesChart"></canvas>
+    </div>
+    <div class="half">
+      <h1 class="row">Letzte 60 Minuten</h1>
+      <canvas class="row" id="hourChart"></canvas>
+    </div>
+  </div>
+  <div class="row pad">
+    <div class="half">
+      <h1>Letzte 6 Stunden</h1>
+      <canvas id="halfDayChart"></canvas>
+    </div>
+    <div class="half">
+      <h1>Letzte 24 Stunden</h1>
+      <canvas id="dayChart"></canvas>
+    </div>
+  </div>
+  <div class="row">
+    <div class="half">
+      <h1>Bestimmter Tag</h1>
+      <div class="row">
+        <app-date-input id="customDay" data-label="Tag"></app-date-input>
+      </div>
+      <canvas id="customDayChart"></canvas>
+    </div>
+    <div class="half">
+      <h1>Eigener Zeitraum</h1>
+      <div style="display: flex; align-items: center" class="row">
+        <app-datetime-input id="from" data-label="Von"></app-datetime-input>
+        <app-datetime-input id="to" data-label="Bis"></app-datetime-input>
+        <app-button style="height: 15px" id="customTimespan">Erstellen</app-button>
+      </div>
+      <canvas id="customTimespanChart"></canvas>
+    </div>
+  </div>
+</main>
+<script src="/assets/components/app-button.js" type="module" async></script>
+<script src="/assets/components/app-date-input.js" type="module" async></script>
+<script src="/assets/components/app-datetime-input.js" type="module" async></script>
 <script src="/main.js" type="module"></script>
 <script src="/assets/components/app-header.js" type="module"></script>
-<script src="/temperatur/temperatur.js" type="module"></script>
+<script src="/temperatur/temperatur.js" type="module">
+</script>
 </body>
 </html>

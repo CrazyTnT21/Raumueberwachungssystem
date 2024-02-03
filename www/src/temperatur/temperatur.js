@@ -1,106 +1,110 @@
-import {SERVER_URL} from "../config.js";
 import {getCurrentRoom} from "../assets/components/app-header.js";
+import {createChart, defaultOptions} from "../assets/scripts/helpers/chartHelper.js";
+import {dayTimespan, minutesAgo} from "../assets/scripts/helpers/dateHelper.js";
+import {getUntilItemCount} from "../assets/scripts/helpers/endpointHelper.js";
+import {updateRecentValue} from "./temperatur-exports.js";
 
-let chart;
 
-async function createChartObject(element, chart, roomName)
+async function getTimeSpan(roomName, from, to)
 {
-  if (chart)
-    chart.destroy();
+  const url = "temperature/" + roomName + "/" + from.getTime() + "-" + to.getTime();
+  return await getUntilItemCount(url);
+}
 
-  const tenMinutesAgo = new Date();
-  tenMinutesAgo.setMinutes(tenMinutesAgo.getMinutes() - 10);
-
-  const url = SERVER_URL + "temperature/" + roomName + "/" + tenMinutesAgo.getTime() + "-" + new Date().getTime();
-
-  let result = await (await fetch(url)).json();
-
-  let items = result.items;
-  while (result.links[0].next)
-  {
-    const request = await fetch(result.links[0].next);
-    result = await request.json();
-    items.push(...result.items);
-  }
-
+function createChartObject(element, items)
+{
   const data = {
     labels: items.map(item => new Date(item.measured).toLocaleTimeString()),
     datasets: [{
       label: "Temperatur",
-      data: items.map(item => item.valueCelsius.toFixed(1)),
+      data: items.map(item => item.valueCelsius.toFixed(2)),
       borderWidth: 1,
     }],
   };
-  return createChart(element, data);
-}
-
-
-const element = document.getElementById("myChart");
-const header = document.querySelector("app-header");
-const room = getCurrentRoom();
-
-header.addEventListener("roomChanged", async (e) =>
-{
-  chart = await createChartObject(element, chart, e.detail);
-});
-if (room)
-  createChartObject(element, chart, room).then(x =>
-  {
-    chart = x;
-  });
-
-const Chart = window.chartJs.Chart;
-
-function createChart(element, data)
-{
-  return new Chart(element, {
-    type: "line",
-    data: data,
-    options: {
-      devicePixelRatio: 4,
-      responsive: true,
-      plugins: {
-        tooltip: {
-          callbacks: {
-            label: function (context)
-            {
-              return context.parsed.y + "°C";
-            },
-          },
-        },
-        legend: {
-          position: "top",
-        },
-      },
-
-      scales: {
-        y: {
-          min: 5,
-          max: 35,
+  const temperatureOptions = {
+    ...defaultOptions,
+    scales: {
+      y: {
+        max: 40,
+        min: 0,
+        border: {
+          display: false,
         },
       },
     },
-  });
+  };
+  createChart(element, data, temperatureOptions);
 }
 
-async function updateRecentValue(roomName)
+const header = document.querySelector("app-header");
+const room = getCurrentRoom();
+
+async function updateGraphs(room)
 {
-  const currentValueElement = document.querySelector("#currentValue");
-  const currentValue = await (await fetch(SERVER_URL + "temperature/" + roomName + "?latest")).json();
-  if (currentValueElement && currentValue.items[0])
-  {
-    currentValueElement.parentElement.hidden = false;
-    currentValueElement.innerHTML = currentValue.items[0].valueCelsius.toFixed(1) + "°C";
-  }
-  else
-    currentValueElement.parentElement.hidden = true;
+  const items = await getTimeSpan(room, minutesAgo(60 * 24), new Date());
+  const sixHours = items.filter(x => new Date(x.measured) >= minutesAgo(60 * 6));
+  const hour = sixHours.filter(x => new Date(x.measured) >= minutesAgo(60));
+  const tenMinutes = hour.filter(x => new Date(x.measured) >= minutesAgo(10));
+  createChartObject(document.querySelector("#dayChart"), items);
+  createChartObject(document.querySelector("#halfDayChart"), sixHours);
+  createChartObject(document.querySelector("#hourChart"), hour);
+  createChartObject(document.querySelector("#tenMinutesChart"), tenMinutes);
 }
+
+
+header.addEventListener("roomChanged", async (e) => updateGraphs(e.detail));
+
 if (room)
-  await updateRecentValue(room);
+  void updateGraphs(room);
+
+
+const button = document.querySelector("#customTimespan");
+button.addEventListener("click", async () =>
+{
+  const from = document.querySelector("#from");
+  const to = document.querySelector("#to");
+  console.log(from, to);
+  if (!from.value || !to.value)
+    return;
+
+  const fromValue = new Date(from.value);
+  const toValue = new Date(to.value);
+
+  if (!isNaN(fromValue.getTime()) && !isNaN(toValue.getTime()))
+  {
+    const items = await getTimeSpan(room, fromValue, toValue);
+    const data = {
+      labels: items.map(item => new Date(item.measured).toLocaleTimeString()),
+      datasets: [{
+        label: "Temperatur",
+        data: items.map(item => item.valueCelsius.toFixed(2)),
+        borderWidth: 1,
+      }],
+    };
+    createChart(document.querySelector("#customTimespanChart"), data);
+  }
+});
+
+const customDay = document.querySelector("#customDay");
+
+customDay.addEventListener("change", async e =>
+{
+  if (!e.target["value"])
+    return;
+
+  const timespan = dayTimespan(e.target["value"]);
+  const customDayChart = document.querySelector("#customDayChart");
+  const items = await getTimeSpan(room, timespan.from, timespan.to);
+
+  createChartObject(customDayChart, items);
+});
+if (room)
+  void updateRecentValue(room, document.querySelector("#currentValue"));
 
 setInterval(async () =>
 {
   const room = getCurrentRoom();
   if (room)
-    await updateRecentValue(room);
+    await updateRecentValue(room, document.querySelector("#currentValue"));
 }, 5000);
+

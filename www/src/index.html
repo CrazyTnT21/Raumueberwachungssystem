@@ -7,10 +7,57 @@
 </head>
 
 <body>
-<app-header></app-header>
-Wilkommen zur Startseite
+<app-header data-choose></app-header>
 
-<script src="/assets/components/app-header.js" type="module"></script>
+<main class="row">
+  <div>
+    <h1 class="row">Temperatur</h1>
+    <div hidden="hidden" class="center pad">
+      <div>
+        <h1>Letzter Wert</h1>
+        <div id="valueTemperature"></div>
+      </div>
+    </div>
+    <div class="row pad">
+      <div class="half">
+        <h1 class="row">Letzte 10 Minuten</h1>
+        <canvas class="row" id="temperatureChart"></canvas>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h1 class="row">Feuchtigkeit</h1>
+    <div hidden="hidden" class="center pad">
+      <div>
+        <h1>Letzter Wert</h1>
+        <div id="valueHumidity"></div>
+      </div>
+    </div>
+    <div class="row pad">
+      <div class="half">
+        <h1 class="row">Letzte 10 Minuten</h1>
+        <canvas class="row" id="humidityChart"></canvas>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h1 class="row">Licht</h1>
+    <div hidden="hidden" class="center pad">
+      <div>
+        <h1>Letzter Wert</h1>
+        <div id="valueLight"></div>
+      </div>
+    </div>
+    <div class="row pad">
+      <div class="half">
+        <h1 class="row">Letzte 10 Minuten</h1>
+        <canvas class="row" id="lightChart"></canvas>
+      </div>
+    </div>
+  </div>
+</main>
 <script src="/main.js" type="module"></script>
+<script src="/index-page.js" type="module"></script>
+<script src="/assets/components/app-header.js" type="module"></script>
 </body>
 </html>
