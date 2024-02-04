@@ -8,27 +8,27 @@
 <body>
 <app-header data-choose></app-header>
 <main class="row">
-  <div>
-    <h1 class="row">Temperatur</h1>
+  <div class="half">
+    <h1 class="row center">Temperatur</h1>
     <div hidden="hidden" class="center pad">
       <div>
         <h2 class="center">Letzter Wert</h2>
         <div class="center">
-          <span class="" id="valueTemperature"></span>
+          <span id="valueTemperature"></span>
           &NonBreakingSpace;-&NonBreakingSpace;
-          <span class="" id="lastUpdateTemperature"></span>
+          <span id="lastUpdateTemperature"></span>
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row center">
       <div class="half">
-        <h1 class="row">Letzte 10 Minuten</h1>
+        <h1 class="row center">Letzte 10 Minuten</h1>
         <canvas class="row" id="temperatureChart"></canvas>
       </div>
     </div>
   </div>
-  <div>
-    <h1 class="row">Feuchtigkeit</h1>
+  <div class="half">
+    <h1 class="row center">Feuchtigkeit</h1>
     <div hidden="hidden" class="center pad">
       <div>
         <h2 class="center">Letzter Wert</h2>
@@ -39,15 +39,15 @@
         </div>
       </div>
     </div>
-    <div class="row">
+    <div class="row center">
       <div class="half">
-        <h1 class="row">Letzte 10 Minuten</h1>
+        <h1 class="row center">Letzte 10 Minuten</h1>
         <canvas class="row" id="humidityChart"></canvas>
       </div>
     </div>
   </div>
-  <div>
-    <h1 class="row">Licht</h1>
+  <div class="half">
+    <h1 class="row center">Licht</h1>
     <div>
       <h2 class="center">Letzter Wert</h2>
       <div class="center">
@@ -56,9 +56,9 @@
         <span class="" id="lastUpdateLight"></span>
       </div>
     </div>
-    <div class="row">
-      <div class="half">
-        <h1 class="row">Letzte 10 Minuten</h1>
+    <div class="row center pad">
+      <div class="half pad">
+        <h1 class="row center">Letzte 10 Minuten</h1>
         <canvas class="row" id="lightChart"></canvas>
       </div>
     </div>

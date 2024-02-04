@@ -1,47 +1,15 @@
 import {getCurrentRoom} from "../assets/components/app-header.js";
-import {createChart, defaultOptions} from "../assets/scripts/helpers/chartHelper.js";
+import {createChart} from "../assets/scripts/helpers/chartHelper.js";
 import {dayTimespan, minutesAgo} from "../assets/scripts/helpers/dateHelper.js";
-import {getUntilItemCount} from "../assets/scripts/helpers/endpointHelper.js";
-import {updateRecentValue} from "./licht-exports.js";
+import {createChartObject, getTimespan, updateRecentValue} from "./licht-exports.js";
 
-
-async function getTimeSpan(roomName, from, to)
-{
-  const url = "light/" + roomName + "/" + from.getTime() + "-" + to.getTime();
-  return await getUntilItemCount(url);
-}
-
-function createChartObject(element, items)
-{
-  const data = {
-    labels: items.map(item => new Date(item.measured).toLocaleTimeString()),
-    datasets: [{
-      label: "Licht",
-      data: items.map(item => item.value.toFixed(0)),
-      borderWidth: 1,
-    }],
-  };
-  const lightOptions = {
-    ...defaultOptions,
-    scales: {
-      y: {
-        max: 40000,
-        min: 15000,
-        border: {
-          display: false,
-        },
-      },
-    },
-  };
-  createChart(element, data, lightOptions);
-}
 
 const header = document.querySelector("app-header");
 const room = getCurrentRoom();
 
 async function updateGraphs(room)
 {
-  const items = await getTimeSpan(room, minutesAgo(60 * 24), new Date());
+  const items = await getTimespan(room, minutesAgo(60 * 24), new Date());
   const sixHours = items.filter(x => new Date(x.measured) >= minutesAgo(60 * 6));
   const hour = sixHours.filter(x => new Date(x.measured) >= minutesAgo(60));
   const tenMinutes = hour.filter(x => new Date(x.measured) >= minutesAgo(10));
@@ -50,7 +18,6 @@ async function updateGraphs(room)
   createChartObject(document.querySelector("#hourChart"), hour);
   createChartObject(document.querySelector("#tenMinutesChart"), tenMinutes);
 }
-
 
 header.addEventListener("roomChanged", async (e) =>
 {
@@ -84,7 +51,7 @@ button.addEventListener("click", async () =>
 
   if (!isNaN(fromValue.getTime()) && !isNaN(toValue.getTime()))
   {
-    const items = await getTimeSpan(room, fromValue, toValue);
+    const items = await getTimespan(room, fromValue, toValue);
 
     const data = {
       labels: items.map(item => new Date(item.measured).toLocaleTimeString()),
@@ -107,7 +74,7 @@ customDay.addEventListener("change", async e =>
 
   const timespan = dayTimespan(e.target["value"]);
   const customDayChart = document.querySelector("#customDayChart");
-  const items = await getTimeSpan(room, timespan.from, timespan.to);
+  const items = await getTimespan(room, timespan.from, timespan.to);
 
   createChartObject(customDayChart, items);
 });
