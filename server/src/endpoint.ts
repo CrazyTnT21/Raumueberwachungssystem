@@ -1,14 +1,14 @@
 export class Endpoint<T>
 {
-    items: T[];
+    result: T;
     count: number;
     total: number;
     links: Link[];
 
-    constructor(items: T[], links: Link[],total: number)
+    constructor(items: T,count: number, links: Link[],total: number)
     {
-        this.items = items;
-        this.count = this.items.length;
+        this.result = items;
+        this.count = count;
         this.links = links;
         this.total = total;
     }

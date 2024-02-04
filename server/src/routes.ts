@@ -29,13 +29,20 @@ export function defineRoutes(app: Express, services: Services)
     defineRoomRoute(app, services.roomService);
 }
 
-function transformEndpoint<T>(routePath: string, total: number, items: T[], page: number): Endpoint<T>
+function transformEndpoint<T>(routePath: string, item: T): Endpoint<T>
+{
+    const links: Link[] = [new Link(SERVER_URL, SERVER_URL + routePath,)]
+    const count = item ? 1 : 0;
+    return new Endpoint(item, count, links, count);
+}
+
+function transformEndpointItems<T>(routePath: string, total: number, items: T[], page: number): Endpoint<T[]>
 {
     const previous = page == 0 ? null : (SERVER_URL + routePath + "?page=" + (page - 1));
     const next = total <= (page * maxLimit + items.length) ? null : SERVER_URL + routePath + "?page=" + (page + 1);
     const links: Link[] = [new Link(SERVER_URL, SERVER_URL + routePath, previous, next)]
 
-    return new Endpoint(items, links, total);
+    return new Endpoint(items, items.length, links, total);
 }
 
 function send400(res: any, message: string)
@@ -56,13 +63,13 @@ function defineLightRoute(app: Express, lightService: () => LightService)
         if (req.query.latest == "")
         {
             const result = await lightController.getLatestItem(room);
-            const endPoint = transformEndpoint(req.path, result ? 1 : 0, result ? [result] : [], 0);
+            const endPoint = transformEndpoint(req.path, result);
             res.json(endPoint);
         }
         else
         {
             const result = await lightController.getItems(room, page, limit);
-            const endPoint = transformEndpoint(req.path, result.total, result.items, page);
+            const endPoint = transformEndpointItems(req.path, result.total, result.items, page);
             res.json(endPoint);
         }
     })
@@ -84,7 +91,7 @@ function defineLightRoute(app: Express, lightService: () => LightService)
         const lightController: LightController = new LightController(lightService());
 
         const result = await lightController.getItemsByTimespan(room, from, to, page, limit);
-        const endPoint = transformEndpoint(req.path, result.total, result.items, page);
+        const endPoint = transformEndpointItems(req.path, result.total, result.items, page);
         res.json(endPoint);
     })
 }
@@ -108,13 +115,13 @@ function defineAirRoute(app: Express, airService: () => AirService)
         if (req.query.latest == "")
         {
             const result = await airController.getLatestItem(room);
-            const endPoint = transformEndpoint(req.path, result ? 1 : 0, result ? [result] : [], 0);
+            const endPoint = transformEndpoint(req.path, result);
             res.json(endPoint);
         }
         else
         {
             const result = await airController.getItems(room, page, limit);
-            const endPoint = transformEndpoint(req.path, result.total, result.items, page);
+            const endPoint = transformEndpointItems(req.path, result.total, result.items, page);
             res.json(endPoint);
         }
     })
@@ -136,7 +143,7 @@ function defineAirRoute(app: Express, airService: () => AirService)
         const airController: AirController = new AirController(airService());
 
         const result = await airController.getItemsByTimespan(room, from, to, page, limit);
-        const endPoint = transformEndpoint(req.path, result.total, result.items, page);
+        const endPoint = transformEndpointItems(req.path, result.total, result.items, page);
         res.json(endPoint);
     })
 }
@@ -153,13 +160,13 @@ function defineTemperatureRoute(app: Express, temperatureService: () => Temperat
         if (req.query.latest == "")
         {
             const result = await temperatureController.getLatestItem(room);
-            const endPoint = transformEndpoint(req.path, result ? 1 : 0, result ? [result] : [], 0);
+            const endPoint = transformEndpoint(req.path, result);
             res.json(endPoint);
         }
         else
         {
             const result = await temperatureController.getItems(room, page, limit);
-            const endPoint = transformEndpoint(req.path, result.total, result.items, page);
+            const endPoint = transformEndpointItems(req.path, result.total, result.items, page);
             res.json(endPoint);
         }
     })
@@ -181,7 +188,7 @@ function defineTemperatureRoute(app: Express, temperatureService: () => Temperat
         const temperatureController: TemperatureController = new TemperatureController(temperatureService());
 
         const result = await temperatureController.getItemsByTimespan(room, from, to, page, limit);
-        const endPoint = transformEndpoint(req.path, result.total, result.items, page);
+        const endPoint = transformEndpointItems(req.path, result.total, result.items, page);
         res.json(endPoint);
     })
 }
@@ -198,13 +205,13 @@ function defineHumidityRoute(app: Express, humidityService: () => HumidityServic
         if (req.query.latest == "")
         {
             const result = await humidityController.getLatestItem(room);
-            const endPoint = transformEndpoint(req.path, result ? 1 : 0, result ? [result] : [], 0);
+            const endPoint = transformEndpoint(req.path, result);
             res.json(endPoint);
         }
         else
         {
             const result = await humidityController.getItems(room, page, limit);
-            const endPoint = transformEndpoint(req.path, result.total, result.items, page);
+            const endPoint = transformEndpointItems(req.path, result.total, result.items, page);
             res.json(endPoint);
         }
     })
@@ -226,7 +233,7 @@ function defineHumidityRoute(app: Express, humidityService: () => HumidityServic
         const humidityController: HumidityController = new HumidityController(humidityService());
 
         const result = await humidityController.getItemsByTimespan(room, from, to, page, limit);
-        const endPoint = transformEndpoint(req.path, result.total, result.items, page);
+        const endPoint = transformEndpointItems(req.path, result.total, result.items, page);
         res.json(endPoint);
     })
 }
@@ -241,7 +248,7 @@ function defineRoomRoute(app: Express, roomService: () => RoomService)
         const limit = getLimit(<string>req.query.limit)
 
         const result = await roomController.getItems(search, page, limit);
-        const endPoint = transformEndpoint(req.path, result.total, result.items, page);
+        const endPoint = transformEndpointItems(req.path, result.total, result.items, page);
         res.json(endPoint);
 
     })
@@ -257,7 +264,7 @@ function defineRoomRoute(app: Express, roomService: () => RoomService)
         const roomController: RoomController = new RoomController(roomService());
 
         const result = await roomController.getItem(id);
-        const endPoint = transformEndpoint(req.path, result ? 1 : 0, result ? [result] : [], 0);
+        const endPoint = transformEndpoint(req.path, result);
         res.json(endPoint);
     })
 }
@@ -293,4 +300,5 @@ export function getLimit(value: number | string | undefined | null)
         return <number>value;
     return maxLimit;
 }
+
 export const maxLimit = 500;

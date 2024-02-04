@@ -6,12 +6,12 @@ export async function getUntilItemCount(relativeUrl, itemCount = 100000)
 
   let result = await (await fetch(url)).json();
 
-  const items = result.items;
+  const items = result.result;
   while (result.links[0].next && items.length <= itemCount)
   {
     const request = await fetch(result.links[0].next);
     result = await request.json();
-    items.push(...result.items);
+    items.push(...result.result);
   }
   return items;
 }

@@ -118,7 +118,7 @@ class AppHeader extends HTMLElement
     {
       const request = await fetch(SERVER_URL + "room");
       const result = await request.json();
-      this.rooms = result.items;
+      this.rooms = result.result;
     }
   }
 

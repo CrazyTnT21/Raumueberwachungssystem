@@ -98,12 +98,12 @@ customDay.addEventListener("change", async e =>
   createChartObject(customDayChart, items);
 });
 if (room)
-  void updateRecentValue(room);
+  void updateRecentValue(room, document.querySelector("#currentValue"));
 
 setInterval(async () =>
 {
   const room = getCurrentRoom();
   if (room)
-    await updateRecentValue(room);
+    await updateRecentValue(room, document.querySelector("#currentValue"));
 }, 5000);
 

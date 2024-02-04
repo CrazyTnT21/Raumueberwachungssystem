@@ -3,10 +3,10 @@ import {SERVER_URL} from "../config.js";
 export async function updateRecentValue(roomName,element)
 {
   const value = await getLatest(roomName);
-  if (element && value.items[0])
+  if (element && value.result)
   {
     element.parentElement.hidden = false;
-    element.innerHTML = value.items[0].value.toFixed(0) + " (Lichtwiederstand) <br>Zuletzt aktualisiert: " + new Date(value.items[0].measured).toLocaleTimeString();
+    element.innerHTML = value.result.value.toFixed(0) + " (Lichtwiederstand) <br>Zuletzt aktualisiert: " + new Date(value.result.measured).toLocaleTimeString();
   }
   else
     element.parentElement.hidden = true;
