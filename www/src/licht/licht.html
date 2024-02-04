@@ -7,44 +7,49 @@
 </head>
 <body>
 <app-header data-choose></app-header>
-<main class="row">
-  <div hidden="hidden" class="center pad">
-    <div>
-      <h1>Letzter Wert</h1>
-      <div id="currentValue"></div>
+<h1 class="pad center">Lichtdaten</h1>
+<h3 class="center">Room</h3>
+<div hidden="hidden" class="center pad">
+  <div>
+    <h2 class="center">Letzter Wert</h2>
+    <div class="center">
+      <span class="" id="currentValue"></span>
+      &NonBreakingSpace;-&NonBreakingSpace;
+      <span class="" id="lastUpdate"></span>
     </div>
   </div>
-
+</div>
+<main class="row">
   <div class="row pad">
     <div class="half">
-      <h1 class="row">Letzte 10 Minuten</h1>
+      <h2 class="row">Letzte 10 Minuten</h2>
       <canvas class="row" id="tenMinutesChart"></canvas>
     </div>
     <div class="half">
-      <h1 class="row">Letzte 60 Minuten</h1>
+      <h2 class="row">Letzte 60 Minuten</h2>
       <canvas class="row" id="hourChart"></canvas>
     </div>
   </div>
   <div class="row pad">
     <div class="half">
-      <h1>Letzte 6 Stunden</h1>
+      <h2>Letzte 6 Stunden</h2>
       <canvas id="halfDayChart"></canvas>
     </div>
     <div class="half">
-      <h1>Letzte 24 Stunden</h1>
+      <h2>Letzte 24 Stunden</h2>
       <canvas id="dayChart"></canvas>
     </div>
   </div>
   <div class="row">
     <div class="half">
-      <h1>Bestimmter Tag</h1>
+      <h2>Bestimmter Tag</h2>
       <div class="row">
         <app-date-input id="customDay" data-label="Tag"></app-date-input>
       </div>
       <canvas id="customDayChart"></canvas>
     </div>
     <div class="half">
-      <h1>Eigener Zeitraum</h1>
+      <h2>Eigener Zeitraum</h2>
       <div style="display: flex; align-items: center" class="row">
         <app-datetime-input id="from" data-label="Von"></app-datetime-input>
         <app-datetime-input id="to" data-label="Bis"></app-datetime-input>

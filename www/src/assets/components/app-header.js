@@ -38,13 +38,11 @@ class AppHeader extends HTMLElement
           <ul>
             <li><a href="/licht">Licht</a></li>
             <li><a href="/temperatur">Temperatur</a></li>
-            <li><a href="/Feuchtigkeit">Feuchtigkeit</a></li>
-            <li><a href="/Team">Team</a></li>
+            <li><a href="/feuchtigkeit">Feuchtigkeit</a></li>
+            <li><a href="/team">Team</a></li>
           </ul>
         </nav>
-        <ul style="width: 100%" id="rooms">
-
-        </ul>
+        <ul style="width: 100%" id="rooms"></ul>
       </header>
     `;
   }
@@ -60,12 +58,30 @@ class AppHeader extends HTMLElement
         padding: 20px;
         text-align: center;
         flex-wrap: wrap;
-        max-height: 100px;
       }
 
       h1 {
         margin: 0;
-        font-size: 36px;
+      }
+
+      @media screen and (min-width: 700px) {
+        h1 {
+          font-size: 36px;
+        }
+
+        h1 > a:hover {
+          font-size: 38px;
+        }
+
+        li > a:hover {
+          font-size: 22px;
+        }
+      }
+
+      @media screen and (max-width: 700px) {
+        h1 {
+          font-size: 26px;
+        }
       }
 
       ul {
@@ -97,14 +113,6 @@ class AppHeader extends HTMLElement
       li,
       a {
         display: flex;
-      }
-
-      li > a:hover {
-        font-size: 22px;
-      }
-
-      h1 > a:hover {
-        font-size: 38px;
       }
     `;
   }

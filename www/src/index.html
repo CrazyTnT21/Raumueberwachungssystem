@@ -5,17 +5,19 @@
   <link href="/assets/styles.css" rel="stylesheet">
   <title>Startseite</title>
 </head>
-
 <body>
 <app-header data-choose></app-header>
-
 <main class="row">
   <div>
     <h1 class="row">Temperatur</h1>
     <div hidden="hidden" class="center pad">
       <div>
-        <h1>Letzter Wert</h1>
-        <div id="valueTemperature"></div>
+        <h2 class="center">Letzter Wert</h2>
+        <div class="center">
+          <span class="" id="valueTemperature"></span>
+          &NonBreakingSpace;-&NonBreakingSpace;
+          <span class="" id="lastUpdateTemperature"></span>
+        </div>
       </div>
     </div>
     <div class="row pad">
@@ -29,8 +31,12 @@
     <h1 class="row">Feuchtigkeit</h1>
     <div hidden="hidden" class="center pad">
       <div>
-        <h1>Letzter Wert</h1>
-        <div id="valueHumidity"></div>
+        <h2 class="center">Letzter Wert</h2>
+        <div class="center">
+          <span class="" id="valueHumidity"></span>
+          &NonBreakingSpace;-&NonBreakingSpace;
+          <span class="" id="lastUpdateHumidity"></span>
+        </div>
       </div>
     </div>
     <div class="row pad">
@@ -42,10 +48,12 @@
   </div>
   <div>
     <h1 class="row">Licht</h1>
-    <div hidden="hidden" class="center pad">
-      <div>
-        <h1>Letzter Wert</h1>
-        <div id="valueLight"></div>
+    <div>
+      <h2 class="center">Letzter Wert</h2>
+      <div class="center">
+        <span class="" id="valueLight"></span>
+        &NonBreakingSpace;-&NonBreakingSpace;
+        <span class="" id="lastUpdateLight"></span>
       </div>
     </div>
     <div class="row pad">

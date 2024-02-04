@@ -2,7 +2,8 @@
   "name": "website",
   "version": "1.0.0",
   "scripts": {
-    "start": "npx webpack serve"
+    "start": "npx webpack serve",
+    "build": "npx webpack"
   },
   "author": "",
   "license": "ISC",

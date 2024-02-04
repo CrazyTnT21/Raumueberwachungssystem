@@ -30,6 +30,12 @@ function createChartObject(element, items)
         border: {
           display: false,
         },
+        ticks: {
+          callback: (value) =>
+          {
+            return value + "°C";
+          },
+        },
       },
     },
   };
@@ -99,12 +105,12 @@ customDay.addEventListener("change", async e =>
   createChartObject(customDayChart, items);
 });
 if (room)
-  void updateRecentValue(room, document.querySelector("#currentValue"));
+  void updateRecentValue(room, document.querySelector("#currentValue"), document.querySelector("#lastUpdate"));
 
 setInterval(async () =>
 {
   const room = getCurrentRoom();
   if (room)
-    await updateRecentValue(room, document.querySelector("#currentValue"));
+    await updateRecentValue(room, document.querySelector("#currentValue"), document.querySelector("#lastUpdate"));
 }, 5000);
 
