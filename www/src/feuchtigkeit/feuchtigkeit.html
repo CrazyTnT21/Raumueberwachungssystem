@@ -8,6 +8,7 @@
 <body>
 <app-header data-choose></app-header>
 <h1 class="pad center">Feuchtigkeitsdaten</h1>
+<h3 id="currentRoom" class="center"></h3>
 <div hidden="hidden" class="center pad">
   <div>
     <h2 class="center">Letzter Wert</h2>
@@ -19,40 +20,44 @@
   </div>
 </div>
 <main class="row">
-  <div class="row pad">
+  <div class="row">
     <div class="half">
-      <h2 class="row">Letzte 10 Minuten</h2>
+      <h2 class="row center">Letzte 10 Minuten</h2>
       <canvas class="row" id="tenMinutesChart"></canvas>
     </div>
     <div class="half">
-      <h2 class="row">Letzte 60 Minuten</h2>
+      <h2 class="row center">Letzte 60 Minuten</h2>
       <canvas class="row" id="hourChart"></canvas>
     </div>
   </div>
-  <div class="row pad">
+  <div class="row">
     <div class="half">
-      <h2>Letzte 6 Stunden</h2>
+      <h2 class="center">Letzte 6 Stunden</h2>
       <canvas id="halfDayChart"></canvas>
     </div>
     <div class="half">
-      <h2>Letzte 24 Stunden</h2>
+      <h2 class="center">Letzte 24 Stunden</h2>
       <canvas id="dayChart"></canvas>
     </div>
   </div>
   <div class="row">
     <div class="half">
-      <h2>Bestimmter Tag</h2>
-      <div class="row">
+      <h2 class="center">Bestimmter Tag</h2>
+      <div class="row center">
         <app-date-input id="customDay" data-label="Tag"></app-date-input>
       </div>
       <canvas id="customDayChart"></canvas>
     </div>
     <div class="half">
-      <h2>Eigener Zeitraum</h2>
-      <div style="display: flex; align-items: center" class="row">
-        <app-datetime-input id="from" data-label="Von"></app-datetime-input>
-        <app-datetime-input id="to" data-label="Bis"></app-datetime-input>
-        <app-button style="height: 15px" id="customTimespan">Darstellen</app-button>
+      <h2 class="center">Eigener Zeitraum</h2>
+      <div class="row center">
+        <div class="row center">
+          <app-datetime-input id="from" data-label="Von"></app-datetime-input>
+        </div>
+        <div class="center row">
+          <app-datetime-input id="to" data-label="Bis"></app-datetime-input>
+        </div>
+        <app-button id="customTimespan">Darstellen</app-button>
       </div>
       <canvas id="customTimespanChart"></canvas>
     </div>

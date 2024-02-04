@@ -58,11 +58,17 @@ async function updateGraphs(room)
 }
 
 
-header.addEventListener("roomChanged", async (e) => updateGraphs(e.detail));
+header.addEventListener("roomChanged", async (e) =>
+{
+  setRoomText(e.detail);
+  await updateGraphs(e.detail);
+});
 
 if (room)
+{
+  setRoomText(room);
   void updateGraphs(room);
-
+}
 
 const button = document.querySelector("#customTimespan");
 button.addEventListener("click", async () =>
@@ -114,3 +120,8 @@ setInterval(async () =>
     await updateRecentValue(room, document.querySelector("#currentValue"), document.querySelector("#lastUpdate"));
 }, 5000);
 
+
+function setRoomText(room)
+{
+  document.querySelector("#currentRoom").innerText = room;
+}
