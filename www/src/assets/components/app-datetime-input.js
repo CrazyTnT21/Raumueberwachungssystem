@@ -1,6 +1,6 @@
-import {Input} from "./app-input.js";
+import {AppInput} from "./app-input.js";
 
-export class DateTimeInput extends Input
+export class AppDateTimeInput extends AppInput
 {
   constructor()
   {
@@ -14,4 +14,4 @@ export class DateTimeInput extends Input
   }
 }
 
-customElements.define("app-datetime-input", DateTimeInput);
+customElements.define("app-datetime-input", AppDateTimeInput);

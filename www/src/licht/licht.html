@@ -8,65 +8,48 @@
 <body>
 <app-header data-choose></app-header>
 <h1 class="pad center">Lichtdaten</h1>
-<h3 id="currentRoom" class="center"></h3>
-<div hidden="hidden" class="center pad">
-  <div>
-    <h2 class="center">Letzter Wert</h2>
-    <div class="center">
-      <span class="" id="currentValue"></span>
-      &NonBreakingSpace;-&NonBreakingSpace;
-      <span class="" id="lastUpdate"></span>
-    </div>
-  </div>
-</div>
+<h2 id="currentRoom" class="center pad"></h2>
 <main class="row">
+  <app-card class="pad row center" id="currentValue" data-title="Letzter Wert"></app-card>
   <div class="row">
-    <div class="half">
-      <h2 class="row center">Letzte 10 Minuten</h2>
-      <canvas class="row" id="tenMinutesChart"></canvas>
+    <div class="row">
+      <app-chart class="half min-height" id="tenMinutesChart" data-title="Letzte 10 Minuten"></app-chart>
+      <app-chart class="half min-height" id="hourChart" data-title="Letzte 60 Minuten"></app-chart>
     </div>
-    <div class="half">
-      <h2 class="row center">Letzte 60 Minuten</h2>
-      <canvas class="row" id="hourChart"></canvas>
+    <div class="row">
+      <app-chart class="half min-height" id="halfDayChart" data-title="Letzte 6 Stunden"></app-chart>
+      <app-chart class="half min-height" id="dayChart" data-title="Letzte 24 Stunden"></app-chart>
     </div>
   </div>
   <div class="row">
     <div class="half">
-      <h2 class="center">Letzte 6 Stunden</h2>
-      <canvas id="halfDayChart"></canvas>
-    </div>
-    <div class="half">
-      <h2 class="center">Letzte 24 Stunden</h2>
-      <canvas id="dayChart"></canvas>
-    </div>
-  </div>
-  <div class="row">
-    <div class="half">
-      <h2 class="center">Bestimmter Tag</h2>
       <div class="row center">
         <app-date-input id="customDay" data-label="Tag"></app-date-input>
       </div>
-      <canvas id="customDayChart"></canvas>
+      <app-chart class="row min-height" id="customDayChart" data-title="Bestimmter Tag"></app-chart>
     </div>
     <div class="half">
-      <h2 class="center">Eigener Zeitraum</h2>
       <div class="row center">
         <div class="row center">
           <app-datetime-input id="from" data-label="Von"></app-datetime-input>
         </div>
-        <div class="center row">
+        <div class="row center">
           <app-datetime-input id="to" data-label="Bis"></app-datetime-input>
         </div>
-        <app-button id="customTimespan">Darstellen</app-button>
+        <div class="row center">
+          <app-button class="pad" id="customTimespan">Darstellen</app-button>
+        </div>
       </div>
-      <canvas id="customTimespanChart"></canvas>
+      <app-chart class="row min-height" id="customTimespanChart" data-title="Eigener Zeitraum"></app-chart>
     </div>
   </div>
 </main>
+<script src="/assets/components/app-card.js" type="module" async></script>
 <script src="/assets/components/app-button.js" type="module" async></script>
 <script src="/assets/components/app-date-input.js" type="module" async></script>
 <script src="/assets/components/app-datetime-input.js" type="module" async></script>
 <script src="/main.js" type="module"></script>
+<script src="/assets/components/app-chart.js" type="module"></script>
 <script src="/assets/components/app-header.js" type="module"></script>
 <script src="/licht/licht.js" type="module">
 </script>

@@ -1,39 +1,23 @@
 import {getCurrentRoom} from "../assets/components/app-header.js";
-import {createChart} from "../assets/scripts/helpers/chartHelper.js";
 import {dayTimespan, minutesAgo} from "../assets/scripts/helpers/dateHelper.js";
-import {createChartObject, getTimespan, updateRecentValue} from "./feuchtigkeit-exports.js";
-
+import {createChartObject, getLatest, getTimespan} from "./feuchtigkeit-exports.js";
+import {updateGraphs} from "../assets/scripts/common.js";
 
 const header = document.querySelector("app-header");
 const room = getCurrentRoom();
 
-async function updateGraphs(room)
-{
-  const items = await getTimespan(room, minutesAgo(60 * 24), new Date());
-  const sixHours = items.filter(x => new Date(x.measured) >= minutesAgo(60 * 6));
-  const hour = sixHours.filter(x => new Date(x.measured) >= minutesAgo(60));
-  const tenMinutes = hour.filter(x => new Date(x.measured) >= minutesAgo(10));
-  createChartObject(document.querySelector("#dayChart"), items);
-  createChartObject(document.querySelector("#halfDayChart"), sixHours);
-  createChartObject(document.querySelector("#hourChart"), hour);
-  createChartObject(document.querySelector("#tenMinutesChart"), tenMinutes);
-}
-
 header.addEventListener("roomChanged", async (e) =>
 {
-  setRoomText(e.detail);
-  await updateGraphs(e.detail);
+  document.querySelector("#currentRoom").innerText = e.detail;
+  const items = await getTimespan(e.detail, minutesAgo(60 * 24), new Date());
+  await updateGraphs(items, createChartObject);
 });
-
-function setRoomText(room)
-{
-  document.querySelector("#currentRoom").innerText = room;
-}
 
 if (room)
 {
-  setRoomText(room);
-  void updateGraphs(room);
+  document.querySelector("#currentRoom").innerText = room;
+  const items = await getTimespan(room, minutesAgo(60 * 24), new Date());
+  await updateGraphs(items, createChartObject);
 }
 
 const button = document.querySelector("#customTimespan");
@@ -41,7 +25,7 @@ button.addEventListener("click", async () =>
 {
   const from = document.querySelector("#from");
   const to = document.querySelector("#to");
-  console.log(from, to);
+
   if (!from.value || !to.value)
     return;
 
@@ -51,18 +35,9 @@ button.addEventListener("click", async () =>
   if (!isNaN(fromValue.getTime()) && !isNaN(toValue.getTime()))
   {
     const items = await getTimespan(room, fromValue, toValue);
-    const data = {
-      labels: items.map(item => new Date(item.measured).toLocaleTimeString()),
-      datasets: [{
-        label: "Feuchtigkeit",
-        data: items.map(item => item.valuePercentage.toFixed(2)),
-        borderWidth: 1,
-      }],
-    };
-    createChart(document.querySelector("#customTimespanChart"), data);
+    createChartObject(document.querySelector("#customTimespanChart"), items);
   }
 });
-
 const customDay = document.querySelector("#customDay");
 
 customDay.addEventListener("change", async e =>
@@ -77,12 +52,20 @@ customDay.addEventListener("change", async e =>
   createChartObject(customDayChart, items);
 });
 if (room)
-  void updateRecentValue(room, document.querySelector("#currentValue"), document.querySelector("#lastUpdate"));
+{
+  const item = (await getLatest(room)).result;
+  if (item)
+    document.querySelector("#currentValue").value = item.valuePercentage + "% - " + new Date(item.measured).toLocaleTimeString();
+}
 
 setInterval(async () =>
 {
   const room = getCurrentRoom();
   if (room)
-    await updateRecentValue(room, document.querySelector("#currentValue"), document.querySelector("#lastUpdate"));
+  {
+    const item = (await getLatest(room)).result;
+    if (item)
+      document.querySelector("#currentValue").value = item.valuePercentage + "% - " + new Date(item.measured).toLocaleTimeString();
+  }
 }, 5000);
 

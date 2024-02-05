@@ -16,7 +16,6 @@ import {DefaultRoomService} from "./services/default-room-service";
 import {DefaultRoomRepository} from "./repositories/default-room-repository";
 import {readHumidityAndTemperature} from "./dht11-sensor";
 
-export const SERVER_URL: string = "http://192.168.178.77:3000";
 try
 {
     const args = getArgs();

@@ -1,5 +1,4 @@
 import {SERVER_URL} from "../config.js";
-import {createChart, defaultOptions} from "../assets/scripts/helpers/chartHelper.js";
 import {getUntilItemCount} from "../assets/scripts/helpers/endpointHelper.js";
 
 export async function updateRecentValue(roomName, element, lastUpdatedElement)
@@ -7,12 +6,9 @@ export async function updateRecentValue(roomName, element, lastUpdatedElement)
   const value = await getLatest(roomName);
   if (element && value.result)
   {
-    element.parentElement.hidden = false;
-    element.innerHTML = value.result.value.toFixed(0);
-    lastUpdatedElement.innerHTML = new Date(value.result.measured).toLocaleTimeString();
+    element.innerText = value.result.value.toFixed(0);
+    lastUpdatedElement.innerText = new Date(value.result.measured).toLocaleTimeString();
   }
-  else
-    element.parentElement.hidden = true;
 }
 
 export async function getLatest(roomName)
@@ -22,27 +18,21 @@ export async function getLatest(roomName)
 
 export function createChartObject(element, items)
 {
-  const data = {
-    labels: items.map(item => new Date(item.measured).toLocaleTimeString()),
-    datasets: [{
-      label: "Licht",
-      data: items.map(item => item.value.toFixed(0)),
-      borderWidth: 1,
-    }],
-  };
-  const lightOptions = {
-    ...defaultOptions,
-    scales: {
-      y: {
-        max: 40000,
-        min: 15000,
-        border: {
-          display: false,
-        },
-      },
+  console.log(element);
+  element.labels = items.map(item => new Date(item.measured).toLocaleTimeString());
+  element.datasets = [{
+    label: "Licht",
+    data: items.map(item => item.value.toFixed(0)),
+    borderWidth: 1,
+  }];
+  element.scales.y = {
+    max: 40000,
+    min: 15000,
+    border: {
+      display: false,
     },
   };
-  createChart(element, data, lightOptions);
+  element.loadChart();
 }
 
 export async function getTimespan(roomName, from, to)

@@ -1,5 +1,6 @@
 ﻿html {
   font: 1rem "Fira Sans", sans-serif;
+  color: #666666
 }
 
 body {
@@ -54,4 +55,8 @@ h1, h2, h3 {
     flex-wrap: wrap;
     width: 100%;
   }
+}
+
+.min-height {
+  min-height: 300px;
 }

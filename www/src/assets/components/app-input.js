@@ -1,4 +1,4 @@
-export class Input extends HTMLElement
+export class AppInput extends HTMLElement
 {
   get label()
   {
@@ -9,7 +9,7 @@ export class Input extends HTMLElement
   {
     if (!value)
     {
-      logNoValueError("data-label", this.outerHTML,this.parentElement.outerHTML);
+      logNoValueError("data-label", this.outerHTML, this.parentElement.outerHTML);
       value = "";
     }
     this.setAttribute("data-label", value);
@@ -68,7 +68,7 @@ export class Input extends HTMLElement
   render()
   {
     const label = this.label ?? "";
-    if (!label) logNoValueError("label", this.outerHTML,this.parentElement.outerHTML);
+    if (!label) logNoValueError("label", this.outerHTML, this.parentElement.outerHTML);
 
     const placeholder = this.placeholder;
 
@@ -105,9 +105,9 @@ export class Input extends HTMLElement
   }
 }
 
-export function logNoValueError(property, outerHtml,parentHTML)
+export function logNoValueError(property, outerHtml, parentHTML)
 {
   console.error(`No value was given for '${property}' in '${outerHtml}' inside parent '${parentHTML}'`);
 }
 
-customElements.define("app-input", Input);
+customElements.define("app-input", AppInput);

@@ -9,63 +9,21 @@
 <app-header data-choose></app-header>
 <main class="row">
   <div class="half">
-    <h1 class="row center">Temperatur</h1>
-    <div hidden="hidden" class="center pad">
-      <div>
-        <h2 class="center">Letzter Wert</h2>
-        <div class="center">
-          <span id="valueTemperature"></span>
-          &NonBreakingSpace;-&NonBreakingSpace;
-          <span id="lastUpdateTemperature"></span>
-        </div>
-      </div>
-    </div>
-    <div class="row center">
-      <div class="half">
-        <h1 class="row center">Letzte 10 Minuten</h1>
-        <canvas class="row" id="temperatureChart"></canvas>
-      </div>
-    </div>
+    <app-card class="pad row center" id="valueTemperature" data-title="Letzter Wert"></app-card>
+    <app-chart class="row min-height" id="temperatureChart" data-title="Temperatur" data-subtitle="Letzte 10 Minuten"></app-chart>
   </div>
   <div class="half">
-    <h1 class="row center">Feuchtigkeit</h1>
-    <div hidden="hidden" class="center pad">
-      <div>
-        <h2 class="center">Letzter Wert</h2>
-        <div class="center">
-          <span class="" id="valueHumidity"></span>
-          &NonBreakingSpace;-&NonBreakingSpace;
-          <span class="" id="lastUpdateHumidity"></span>
-        </div>
-      </div>
-    </div>
-    <div class="row center">
-      <div class="half">
-        <h1 class="row center">Letzte 10 Minuten</h1>
-        <canvas class="row" id="humidityChart"></canvas>
-      </div>
-    </div>
+    <app-card class="pad row center" id="valueHumidity" data-title="Letzter Wert"></app-card>
+    <app-chart class="row min-height" id="humidityChart" data-title="Feuchtigkeit" data-subtitle="Letzte 10 Minuten"></app-chart>
   </div>
-  <div class="half">
-    <h1 class="row center">Licht</h1>
-    <div>
-      <h2 class="center">Letzter Wert</h2>
-      <div class="center">
-        <span class="" id="valueLight"></span>
-        &NonBreakingSpace;-&NonBreakingSpace;
-        <span class="" id="lastUpdateLight"></span>
-      </div>
-    </div>
-    <div class="row center pad">
-      <div class="half pad">
-        <h1 class="row center">Letzte 10 Minuten</h1>
-        <canvas class="row" id="lightChart"></canvas>
-      </div>
-    </div>
-  </div>
+  <app-card class="pad row center" id="valueLight" data-title="Letzter Wert"></app-card>
+  <app-chart class="row min-height" id="lightChart" data-title="Licht" data-subtitle="Letzte 10 Minuten"></app-chart>
 </main>
 <script src="/main.js" type="module"></script>
+<script src="/assets/components/app-chart.js" type="module"></script>
 <script src="/index-page.js" type="module"></script>
 <script src="/assets/components/app-header.js" type="module"></script>
+<script src="/assets/components/app-card.js" type="module" async></script>
+
 </body>
 </html>

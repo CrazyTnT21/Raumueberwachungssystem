@@ -1,5 +1,4 @@
 import {SERVER_URL} from "../config.js";
-import {createChart, defaultOptions} from "../assets/scripts/helpers/chartHelper.js";
 import {getUntilItemCount} from "../assets/scripts/helpers/endpointHelper.js";
 
 export async function updateRecentValue(roomName, element, lastUpdatedElement)
@@ -23,33 +22,24 @@ export async function getLatest(roomName)
 
 export function createChartObject(element, items)
 {
-  const data = {
-    labels: items.map(item => new Date(item.measured).toLocaleTimeString()),
-    datasets: [{
-      label: "Temperatur",
-      data: items.map(item => item.valueCelsius.toFixed(2)),
-      borderWidth: 1,
-    }],
-  };
-  const temperatureOptions = {
-    ...defaultOptions,
-    scales: {
-      y: {
-        max: 40,
-        min: 0,
-        border: {
-          display: false,
-        },
-        ticks: {
-          callback: (value) =>
-          {
-            return value + "°C";
-          },
-        },
-      },
+  element.labels = items.map(item => new Date(item.measured).toLocaleTimeString());
+  element.datasets = [{
+    label: "Temperatur",
+    data: items.map(item => item.valueCelsius),
+    borderWidth: 1,
+  }];
+  element.scales.y = {
+    max: 40,
+    min: 0,
+    border: {
+      display: false,
+    },
+    ticks: {
+      callback: (value) => value + "°C",
     },
   };
-  createChart(element, data, temperatureOptions);
+
+  element.loadChart();
 }
 
 export async function getTimespan(roomName, from, to)

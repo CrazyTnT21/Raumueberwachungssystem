@@ -1,5 +1,4 @@
 import {SERVER_URL} from "../config.js";
-import {createChart, defaultOptions} from "../assets/scripts/helpers/chartHelper.js";
 import {getUntilItemCount} from "../assets/scripts/helpers/endpointHelper.js";
 
 export async function updateRecentValue(roomName, element, lastUpdatedElement)
@@ -22,33 +21,23 @@ export async function getLatest(roomName)
 
 export function createChartObject(element, items)
 {
-  const data = {
-    labels: items.map(item => new Date(item.measured).toLocaleTimeString()),
-    datasets: [{
-      label: "Feuchtigkeit",
-      data: items.map(item => item.valuePercentage.toFixed(2)),
-      borderWidth: 1,
-    }],
-  };
-  const humidityOptions = {
-    ...defaultOptions,
-    scales: {
-      y: {
-        max: 80,
-        min: 10,
-        border: {
-          display: false,
-        },
-        ticks: {
-          callback: (value) =>
-          {
-            return value + "%";
-          },
-        },
-      },
+  element.labels = items.map(item => new Date(item.measured).toLocaleTimeString());
+  element.datasets = [{
+    label: "Feuchtigkeit",
+    data: items.map(item => item.valuePercentage.toFixed(2)),
+    borderWidth: 1,
+  }];
+  element.scales.y = {
+    max: 80,
+    min: 10,
+    border: {
+      display: false,
+    },
+    ticks: {
+      callback: (value) => value + "%",
     },
   };
-  createChart(element, data, humidityOptions);
+  element.loadChart();
 }
 
 export async function getTimespan(roomName, from, to)

@@ -1,4 +1,4 @@
-export class Button extends HTMLElement
+export class AppButton extends HTMLElement
 {
   get value()
   {
@@ -60,4 +60,4 @@ export class Button extends HTMLElement
   }
 }
 
-customElements.define("app-button", Button);
+customElements.define("app-button", AppButton);

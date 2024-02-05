@@ -8,9 +8,9 @@ import {HumidityService} from "./services/interfaces/humidity-service";
 import {TemperatureController} from "./controllers/temperature-controller";
 import {TemperatureService} from "./services/interfaces/temperature-service";
 import {Endpoint, Link} from "./endpoint";
-import {SERVER_URL} from "./index";
 import {RoomService} from "./services/interfaces/room-service";
 import {RoomController} from "./controllers/room-controller";
+import {SERVER_URL} from "./config";
 
 export type Services = {
     lightService: () => LightService,
