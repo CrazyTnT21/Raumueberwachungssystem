@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1"/>
+  <link href="/assets/styles.css" rel="stylesheet">
+  <title>Luft - Raumüberwachungssystem</title>
+</head>
+<body>
+<app-header data-choose></app-header>
+<h1 class="pad center">Luftdaten</h1>
+<h2 id="currentRoom" class="center pad"></h2>
+<main class="row">
+  <app-card class="pad row center" id="currentValue" data-title="Letzter Wert"></app-card>
+  <div class="row">
+    <div class="row">
+      <app-chart class="half min-height" id="tenMinutesChart" data-title="Letzte 10 Minuten"></app-chart>
+      <app-chart class="half min-height" id="hourChart" data-title="Letzte 60 Minuten"></app-chart>
+    </div>
+    <div class="row">
+      <app-chart class="half min-height" id="halfDayChart" data-title="Letzte 6 Stunden"></app-chart>
+      <app-chart class="half min-height" id="dayChart" data-title="Letzte 24 Stunden"></app-chart>
+    </div>
+  </div>
+  <div class="row">
+    <div class="half">
+      <div class="row center">
+        <app-date-input id="customDay" data-label="Tag"></app-date-input>
+      </div>
+      <app-chart class="row min-height" id="customDayChart" data-title="Bestimmter Tag"></app-chart>
+    </div>
+    <div class="half">
+      <div class="row center">
+        <div class="row center">
+          <app-datetime-input id="from" data-label="Von"></app-datetime-input>
+        </div>
+        <div class="row center">
+          <app-datetime-input id="to" data-label="Bis"></app-datetime-input>
+        </div>
+        <div class="row center">
+          <app-button class="pad" id="customTimespan">Darstellen</app-button>
+        </div>
+      </div>
+      <app-chart class="row min-height" id="customTimespanChart" data-title="Eigener Zeitraum"></app-chart>
+    </div>
+  </div>
+</main>
+<script src="/assets/components/app-card.js" type="module" async></script>
+<script src="/assets/components/app-button.js" type="module" async></script>
+<script src="/assets/components/app-date-input.js" type="module" async></script>
+<script src="/assets/components/app-datetime-input.js" type="module" async></script>
+<script src="/main.js" type="module"></script>
+<script src="/assets/components/app-chart.js" type="module"></script>
+<script src="/assets/components/app-header.js" type="module"></script>
+<script src="/luft/luft.js" type="module">
+</script>
+</body>
+</html>

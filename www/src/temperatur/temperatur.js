@@ -57,7 +57,7 @@ if (room)
 {
   const item = (await getLatest(room)).result;
   if (item)
-    document.querySelector("#currentValue").value = item.valueCelsius + "°C - " + new Date(item.measured).toLocaleTimeString();
+    document.querySelector("#currentValue").value = item.valueCelsius.toFixed(2) + "°C - " + new Date(item.measured).toLocaleTimeString();
 }
 
 setInterval(async () =>
@@ -67,6 +67,6 @@ setInterval(async () =>
   {
     const item = (await getLatest(room)).result;
     if (item)
-      document.querySelector("#currentValue").value = item.valueCelsius + "°C  - " + new Date(item.measured).toLocaleTimeString();
+      document.querySelector("#currentValue").value = item.valueCelsius.toFixed(2) + "°C  - " + new Date(item.measured).toLocaleTimeString();
   }
 }, 5000);

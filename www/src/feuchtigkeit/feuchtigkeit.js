@@ -55,7 +55,7 @@ if (room)
 {
   const item = (await getLatest(room)).result;
   if (item)
-    document.querySelector("#currentValue").value = item.valuePercentage + "% - " + new Date(item.measured).toLocaleTimeString();
+    document.querySelector("#currentValue").value = item.valuePercentage.toFixed(2) + "% - " + new Date(item.measured).toLocaleTimeString();
 }
 
 setInterval(async () =>
@@ -65,7 +65,7 @@ setInterval(async () =>
   {
     const item = (await getLatest(room)).result;
     if (item)
-      document.querySelector("#currentValue").value = item.valuePercentage + "% - " + new Date(item.measured).toLocaleTimeString();
+      document.querySelector("#currentValue").value = item.valuePercentage.toFixed(2) + "% - " + new Date(item.measured).toLocaleTimeString();
   }
 }, 5000);
 

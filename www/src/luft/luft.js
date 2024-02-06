@@ -1,6 +1,6 @@
 import {getCurrentRoom} from "../assets/components/app-header.js";
 import {dayTimespan, minutesAgo} from "../assets/scripts/helpers/dateHelper.js";
-import {createChartObject, getLatest, getTimespan} from "./licht-exports.js";
+import {createChartObject, getLatest, getTimespan} from "./luft-exports.js";
 import {updateGraphs} from "../assets/scripts/common.js";
 
 const header = document.querySelector("app-header");

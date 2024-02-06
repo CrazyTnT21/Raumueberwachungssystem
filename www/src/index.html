@@ -10,14 +10,22 @@
 <main class="row">
   <div class="half">
     <app-card class="pad row center" id="valueTemperature" data-title="Letzter Wert"></app-card>
-    <app-chart class="row min-height" id="temperatureChart" data-title="Temperatur" data-subtitle="Letzte 10 Minuten"></app-chart>
+    <app-chart class="row min-height" id="temperatureChart" data-title="Temperatur"
+               data-subtitle="Letzte 10 Minuten"></app-chart>
   </div>
   <div class="half">
     <app-card class="pad row center" id="valueHumidity" data-title="Letzter Wert"></app-card>
-    <app-chart class="row min-height" id="humidityChart" data-title="Feuchtigkeit" data-subtitle="Letzte 10 Minuten"></app-chart>
+    <app-chart class="row min-height" id="humidityChart" data-title="Feuchtigkeit"
+               data-subtitle="Letzte 10 Minuten"></app-chart>
   </div>
-  <app-card class="pad row center" id="valueLight" data-title="Letzter Wert"></app-card>
-  <app-chart class="row min-height" id="lightChart" data-title="Licht" data-subtitle="Letzte 10 Minuten"></app-chart>
+  <div class="half">
+    <app-card class="pad row center" id="valueLight" data-title="Letzter Wert"></app-card>
+    <app-chart class="row min-height" id="lightChart" data-title="Licht" data-subtitle="Letzte 10 Minuten"></app-chart>
+  </div>
+  <div class="half">
+    <app-card class="pad row center" id="valueAir" data-title="Letzter Wert"></app-card>
+    <app-chart class="row min-height" id="airChart" data-title="Luft" data-subtitle="Letzte 10 Minuten"></app-chart>
+  </div>
 </main>
 <script src="/main.js" type="module"></script>
 <script src="/assets/components/app-chart.js" type="module"></script>

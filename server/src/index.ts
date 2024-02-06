@@ -126,8 +126,8 @@ async function retrieveData(dbClient: Client, roomName: string, services: Servic
         room = roomQuery.rows[0];
     }
     await dbClient.end();
-    void readLightData(room, services.lightService);
-    void readHumidityAndTemperature(room, services.humidityService,services.temperatureService);
+    void readLightData(room, services.lightService, services.airService);
+    void readHumidityAndTemperature(room, services.humidityService, services.temperatureService);
 }
 
 async function validateDatabase(dbClient: Client)

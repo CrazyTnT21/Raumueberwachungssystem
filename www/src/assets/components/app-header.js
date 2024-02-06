@@ -39,6 +39,7 @@ class AppHeader extends HTMLElement
             <li><a href="/licht">Licht</a></li>
             <li><a href="/temperatur">Temperatur</a></li>
             <li><a href="/feuchtigkeit">Feuchtigkeit</a></li>
+            <li><a href="/luft">Luft</a></li>
             <li><a href="/team">Team</a></li>
           </ul>
         </nav>
