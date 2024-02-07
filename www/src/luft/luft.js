@@ -1,44 +1,84 @@
 import {getCurrentRoom} from "../assets/components/app-header.js";
 import {dayTimespan, minutesAgo} from "../assets/scripts/helpers/dateHelper.js";
-import {createChartObject, getLatest, getTimespan} from "./luft-exports.js";
-import {updateGraphs} from "../assets/scripts/common.js";
+import {getLatest} from "./luft-exports.js";
 
 const header = document.querySelector("app-header");
-const room = getCurrentRoom();
-
 header.addEventListener("roomChanged", async (e) =>
 {
   document.querySelector("#currentRoom").innerText = e.detail;
-  const items = await getTimespan(e.detail, minutesAgo(60 * 24), new Date());
-  await updateGraphs(items, createChartObject);
+  await updateGraphs(e.detail);
 });
-
-if (room)
-{
-  document.querySelector("#currentRoom").innerText = room;
-  const items = await getTimespan(room, minutesAgo(60 * 24), new Date());
-  await updateGraphs(items, createChartObject);
-}
 
 const button = document.querySelector("#customTimespan");
 button.addEventListener("click", async () =>
 {
-  const from = document.querySelector("#from");
-  const to = document.querySelector("#to");
+  const fromElement = document.querySelector("#from");
+  const toElement = document.querySelector("#to");
 
-  if (!from.value || !to.value)
+  if (!fromElement.value || !toElement.value)
     return;
 
-  const fromValue = new Date(from.value);
-  const toValue = new Date(to.value);
-
-  if (!isNaN(fromValue.getTime()) && !isNaN(toValue.getTime()))
-  {
-    const items = await getTimespan(room, fromValue, toValue);
-    createChartObject(document.querySelector("#customTimespanChart"), items);
-  }
+  const from = fromElement.value;
+  const to = toElement.value;
+  const room = getCurrentRoom();
+  return document.querySelector("#customTimespanChart").loadItems(room, from, to);
 });
+
 const customDay = document.querySelector("#customDay");
+
+customDay.addEventListener("change", async e => setCustomDay(e.target["value"]));
+header.addEventListener("roomChanged", async () => setCustomDay(customDay.value));
+
+const loadedRoom = getCurrentRoom();
+if (loadedRoom)
+{
+  getLatest(loadedRoom).then(item =>
+  {
+    if (item)
+      setCurrentValue(item);
+  });
+  document.querySelector("#currentRoom").innerText = loadedRoom;
+  void updateGraphs(loadedRoom);
+}
+
+setInterval(async () =>
+{
+  const room = getCurrentRoom();
+  if (room)
+  {
+    const item = await getLatest(room);
+    if (item)
+      setCurrentValue(item);
+  }
+}, 5000);
+
+
+async function updateGraphs(room)
+{
+  const now = new Date();
+  const promises = [
+    document.querySelector("#tenMinutesChart").loadItems(room, minutesAgo(10), now),
+    document.querySelector("#hourChart").loadItems(room, minutesAgo(60), now),
+    document.querySelector("#halfDayChart").loadItems(room, minutesAgo(60 * 6), now),
+    document.querySelector("#dayChart").loadItems(room, minutesAgo(60 * 24), now),
+  ];
+  const customDay = document.querySelector("#customDay");
+  if (customDay.value)
+  {
+    const {from, to} = dayTimespan(customDay.value);
+    promises.push(document.querySelector("#customDayChart").loadItems(room, from, to));
+  }
+  const customTimespanFrom = document.querySelector("#from");
+  if (customTimespanFrom.value)
+  {
+    const customTimespanTo = document.querySelector("#to");
+    if (customTimespanTo.value)
+    {
+      promises.push(document.querySelector("#customTimespanChart").loadItems(room, customTimespanFrom.value, customTimespanTo.value));
+    }
+  }
+  return Promise.all(promises);
+}
 
 async function setCustomDay(day)
 {
@@ -47,28 +87,13 @@ async function setCustomDay(day)
     return;
 
   const timespan = dayTimespan(day);
-  const customDayChart = document.querySelector("#customDayChart");
-  const items = await getTimespan(currentRoom, timespan.from, timespan.to);
 
-  createChartObject(customDayChart, items);
+  return document.querySelector("#customDayChart").loadItems(currentRoom, timespan.from, timespan.to);
 }
 
-customDay.addEventListener("change", async e => setCustomDay(e.target["value"]));
-header.addEventListener("roomChanged", async () => setCustomDay(customDay.value));
-if (room)
+function setCurrentValue(item)
 {
-  const item = (await getLatest(room)).result;
-  if (item)
-    document.querySelector("#currentValue").value = item.value.toFixed(2) + " - " + new Date(item.measured).toLocaleTimeString();
+  const value = item.value.toFixed(2);
+  const time = new Date(item.measured).toLocaleTimeString();
+  document.querySelector("#currentValue").value = `${value} - ${time}`;
 }
-setInterval(async () =>
-{
-  const room = getCurrentRoom();
-  if (room)
-  {
-    const item = (await getLatest(room)).result;
-    if (item)
-      document.querySelector("#currentValue").value = item.value.toFixed(2) + " - " + new Date(item.measured).toLocaleTimeString();
-  }
-}, 5000);
-

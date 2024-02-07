@@ -63,27 +63,6 @@ export class AppChart extends HTMLElement
     return this.#options;
   }
 
-  set options(value)
-  {
-    this.#options = value;
-  }
-
-  #plugins = {};
-  get plugins()
-  {
-    return this.#plugins;
-  }
-
-  set plugins(value)
-  {
-
-  }
-
-  setPlugin(property, value)
-  {
-    this.#plugins[property] = value;
-  }
-
   #chart;
 
   connectedCallback()
@@ -91,40 +70,8 @@ export class AppChart extends HTMLElement
     this.loadChart();
   }
 
-  loadChart()
+  loadChart(config)
   {
-    const data = {
-      labels: this.#labels,
-      datasets: this.#datasets,
-    };
-    this.#options.plugins = this.#plugins;
-    const title = this.title;
-    if (title)
-      this.#options.plugins.title = {
-        display: true,
-        text: title,
-        font: {
-          size: 32,
-        },
-      };
-
-    const subtitle = this.subtitle;
-    if (subtitle)
-      this.#options.plugins.subtitle = {
-        display: true,
-        text: subtitle,
-        font: {
-          size: 16,
-        },
-      };
-
-    this.#options.scales = this.#scales;
-
-    const config = {
-      type: this.#type,
-      data: data,
-      options: this.#options,
-    };
     this.#chart = this.#createChart(config);
   }
 
@@ -160,10 +107,10 @@ export class AppChart extends HTMLElement
   {
     //language=CSS
     return `
-      canvas {
-        width: 100%;
-        height: 100%;
-      }
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
     `;
   }
 

@@ -13,12 +13,16 @@
   <app-card class="pad row center" id="currentValue" data-title="Letzter Wert"></app-card>
   <div class="row">
     <div class="row">
-      <app-chart class="half min-height" id="tenMinutesChart" data-title="Letzte 10 Minuten"></app-chart>
-      <app-chart class="half min-height" id="hourChart" data-title="Letzte 60 Minuten"></app-chart>
+      <app-feuchtigkeit-chart id="tenMinutesChart" class="half min-height"
+                              data-title="Letzte 10 Minuten"></app-feuchtigkeit-chart>
+      <app-feuchtigkeit-chart class="half min-height" id="hourChart"
+                              data-title="Letzte 60 Minuten"></app-feuchtigkeit-chart>
     </div>
     <div class="row">
-      <app-chart class="half min-height" id="halfDayChart" data-title="Letzte 6 Stunden"></app-chart>
-      <app-chart class="half min-height" id="dayChart" data-title="Letzte 24 Stunden"></app-chart>
+      <app-feuchtigkeit-chart class="half min-height" id="halfDayChart"
+                              data-title="Letzte 6 Stunden"></app-feuchtigkeit-chart>
+      <app-feuchtigkeit-chart class="half min-height" id="dayChart"
+                              data-title="Letzte 24 Stunden"></app-feuchtigkeit-chart>
     </div>
   </div>
   <div class="row">
@@ -26,7 +30,8 @@
       <div class="row center">
         <app-date-input id="customDay" data-label="Tag"></app-date-input>
       </div>
-      <app-chart class="row min-height" id="customDayChart" data-title="Bestimmter Tag"></app-chart>
+      <app-feuchtigkeit-chart class="row min-height" id="customDayChart"
+                              data-title="Bestimmter Tag"></app-feuchtigkeit-chart>
     </div>
     <div class="half">
       <div class="row center">
@@ -37,10 +42,11 @@
           <app-datetime-input id="to" data-label="Bis"></app-datetime-input>
         </div>
         <div class="row center">
-          <app-button class="pad"  id="customTimespan">Darstellen</app-button>
+          <app-button class="pad" id="customTimespan">Darstellen</app-button>
         </div>
       </div>
-      <app-chart class="row min-height" id="customTimespanChart" data-title="Eigener Zeitraum"></app-chart>
+      <app-feuchtigkeit-chart class="row min-height" id="customTimespanChart"
+                              data-title="Eigener Zeitraum"></app-feuchtigkeit-chart>
     </div>
   </div>
 </main>
@@ -49,9 +55,9 @@
 <script src="/assets/components/app-date-input.js" type="module" async></script>
 <script src="/assets/components/app-datetime-input.js" type="module" async></script>
 <script src="/main.js" type="module"></script>
-<script src="/assets/components/app-chart.js" type="module"></script>
+<script src="/assets/components/app-feuchtigkeit-chart.js" type="module"></script>
+<script src="/assets/components/app-feuchtigkeit-chart.js" type="module"></script>
 <script src="/assets/components/app-header.js" type="module"></script>
-<script src="/feuchtigkeit/feuchtigkeit.js" type="module">
-</script>
+<script src="/feuchtigkeit/feuchtigkeit.js" type="module"></script>
 </body>
 </html>

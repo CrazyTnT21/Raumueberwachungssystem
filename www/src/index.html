@@ -10,25 +10,30 @@
 <main class="row">
   <div class="half">
     <app-card class="pad row center" id="valueTemperature" data-title="Letzter Wert"></app-card>
-    <app-chart class="row min-height" id="temperatureChart" data-title="Temperatur"
-               data-subtitle="Letzte 10 Minuten"></app-chart>
+    <app-temperatur-chart class="row min-height" id="temperatureChart" data-title="Temperatur"
+                          data-subtitle="Letzte 10 Minuten"></app-temperatur-chart>
   </div>
   <div class="half">
     <app-card class="pad row center" id="valueHumidity" data-title="Letzter Wert"></app-card>
-    <app-chart class="row min-height" id="humidityChart" data-title="Feuchtigkeit"
-               data-subtitle="Letzte 10 Minuten"></app-chart>
+    <app-feuchtigkeit-chart class="row min-height" id="humidityChart" data-title="Feuchtigkeit"
+                            data-subtitle="Letzte 10 Minuten"></app-feuchtigkeit-chart>
   </div>
   <div class="half">
     <app-card class="pad row center" id="valueLight" data-title="Letzter Wert"></app-card>
-    <app-chart class="row min-height" id="lightChart" data-title="Licht" data-subtitle="Letzte 10 Minuten"></app-chart>
+    <app-licht-chart class="row min-height" id="lightChart" data-title="Licht"
+                     data-subtitle="Letzte 10 Minuten"></app-licht-chart>
   </div>
   <div class="half">
     <app-card class="pad row center" id="valueAir" data-title="Letzter Wert"></app-card>
-    <app-chart class="row min-height" id="airChart" data-title="Luft" data-subtitle="Letzte 10 Minuten"></app-chart>
+    <app-luft-chart class="row min-height" id="airChart" data-title="Luft"
+                    data-subtitle="Letzte 10 Minuten"></app-luft-chart>
   </div>
 </main>
 <script src="/main.js" type="module"></script>
-<script src="/assets/components/app-chart.js" type="module"></script>
+<script src="/assets/components/app-licht-chart.js" type="module"></script>
+<script src="/assets/components/app-luft-chart.js" type="module"></script>
+<script src="/assets/components/app-feuchtigkeit-chart.js" type="module"></script>
+<script src="/assets/components/app-temperatur-chart.js" type="module"></script>
 <script src="/index-page.js" type="module"></script>
 <script src="/assets/components/app-header.js" type="module"></script>
 <script src="/assets/components/app-card.js" type="module" async></script>

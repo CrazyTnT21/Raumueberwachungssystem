@@ -12,10 +12,10 @@ header.addEventListener("roomChanged", async e =>
   const graphsPromise = updateGraphs(e.detail);
   await Promise.all([valuesPromise, graphsPromise]);
 });
-const room = getCurrentRoom();
-if (room)
+const loadedRoom = getCurrentRoom();
+if (loadedRoom)
 {
-  await updateValues(room);
+  await updateValues(loadedRoom);
 }
 setInterval(async () =>
 {
@@ -25,12 +25,14 @@ setInterval(async () =>
 
 }, 5000);
 
+void updateGraphs(loadedRoom);
+
 async function updateValues(room)
 {
-  const lightItem = (await light.getLatest(room)).result;
-  const humidityItem = (await humidity.getLatest(room)).result;
-  const temperatureItem = (await temperature.getLatest(room)).result;
-  const airItem = (await air.getLatest(room)).result;
+  const lightItem = await light.getLatest(room);
+  const humidityItem = await humidity.getLatest(room);
+  const temperatureItem = await temperature.getLatest(room);
+  const airItem = await air.getLatest(room);
 
   if (lightItem)
     document.querySelector("#valueLight").value = lightItem.value.toFixed(2) + " - " + new Date(lightItem.measured).toLocaleTimeString();
@@ -44,15 +46,8 @@ async function updateValues(room)
 
 async function updateGraphs(room)
 {
-  const temperatureItems = await temperature.getTimespan(room, minutesAgo(10), new Date());
-  const lightItems = await light.getTimespan(room, minutesAgo(10), new Date());
-  const humidityItems = await humidity.getTimespan(room, minutesAgo(10), new Date());
-  const airItems = await air.getTimespan(room, minutesAgo(10), new Date());
-
-  air.createChartObject(document.querySelector("#airChart"), airItems);
-  temperature.createChartObject(document.querySelector("#temperatureChart"), temperatureItems);
-  light.createChartObject(document.querySelector("#lightChart"), lightItems);
-  humidity.createChartObject(document.querySelector("#humidityChart"), humidityItems);
+  document.querySelector("#airChart").loadItems(room, minutesAgo(10), new Date());
+  document.querySelector("#temperatureChart").loadItems(room, minutesAgo(10), new Date());
+  document.querySelector("#lightChart").loadItems(room, minutesAgo(10), new Date());
+  document.querySelector("#humidityChart").loadItems(room, minutesAgo(10), new Date());
 }
-
-void updateGraphs(room);

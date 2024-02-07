@@ -13,12 +13,12 @@
   <app-card class="pad row center" id="currentValue" data-title="Letzter Wert"></app-card>
   <div class="row">
     <div class="row">
-      <app-chart class="half min-height" id="tenMinutesChart" data-title="Letzte 10 Minuten"></app-chart>
-      <app-chart class="half min-height" id="hourChart" data-title="Letzte 60 Minuten"></app-chart>
+      <app-licht-chart class="half min-height" id="tenMinutesChart" data-title="Letzte 10 Minuten"></app-licht-chart>
+      <app-licht-chart class="half min-height" id="hourChart" data-title="Letzte 60 Minuten"></app-licht-chart>
     </div>
     <div class="row">
-      <app-chart class="half min-height" id="halfDayChart" data-title="Letzte 6 Stunden"></app-chart>
-      <app-chart class="half min-height" id="dayChart" data-title="Letzte 24 Stunden"></app-chart>
+      <app-licht-chart class="half min-height" id="halfDayChart" data-title="Letzte 6 Stunden"></app-licht-chart>
+      <app-licht-chart class="half min-height" id="dayChart" data-title="Letzte 24 Stunden"></app-licht-chart>
     </div>
   </div>
   <div class="row">
@@ -26,7 +26,7 @@
       <div class="row center">
         <app-date-input id="customDay" data-label="Tag"></app-date-input>
       </div>
-      <app-chart class="row min-height" id="customDayChart" data-title="Bestimmter Tag"></app-chart>
+      <app-licht-chart class="row min-height" id="customDayChart" data-title="Bestimmter Tag"></app-licht-chart>
     </div>
     <div class="half">
       <div class="row center">
@@ -40,7 +40,7 @@
           <app-button class="pad" id="customTimespan">Darstellen</app-button>
         </div>
       </div>
-      <app-chart class="row min-height" id="customTimespanChart" data-title="Eigener Zeitraum"></app-chart>
+      <app-licht-chart class="row min-height" id="customTimespanChart" data-title="Eigener Zeitraum"></app-licht-chart>
     </div>
   </div>
 </main>
@@ -49,7 +49,7 @@
 <script src="/assets/components/app-date-input.js" type="module" async></script>
 <script src="/assets/components/app-datetime-input.js" type="module" async></script>
 <script src="/main.js" type="module"></script>
-<script src="/assets/components/app-chart.js" type="module"></script>
+<script src="/assets/components/app-licht-chart.js" type="module"></script>
 <script src="/assets/components/app-header.js" type="module"></script>
 <script src="/licht/licht.js" type="module">
 </script>
