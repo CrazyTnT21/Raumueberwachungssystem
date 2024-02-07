@@ -39,7 +39,7 @@ async function updateValues(room)
   if (temperatureItem)
     document.querySelector("#valueTemperature").value = temperatureItem.valueCelsius.toFixed(2) + "°C - " + new Date(temperatureItem.measured).toLocaleTimeString();
   if (airItem)
-    document.querySelector("#valueAir").value = airItem.value.toFixed(2) + " ppm " + new Date(airItem.measured).toLocaleTimeString();
+    document.querySelector("#valueAir").value = airItem.value.toFixed(2) + " - " + new Date(airItem.measured).toLocaleTimeString();
 }
 
 async function updateGraphs(room)

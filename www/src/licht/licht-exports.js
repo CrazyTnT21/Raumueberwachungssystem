@@ -15,8 +15,8 @@ export function createChartObject(element, items)
     borderWidth: 1,
   }];
   element.scales.y = {
-    max: 40000,
-    min: 15000,
+    max: 30000,
+    min: 5000,
     border: {
       display: false,
     },

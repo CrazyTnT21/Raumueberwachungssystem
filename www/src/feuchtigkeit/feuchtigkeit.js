@@ -40,17 +40,21 @@ button.addEventListener("click", async () =>
 });
 const customDay = document.querySelector("#customDay");
 
-customDay.addEventListener("change", async e =>
+async function setCustomDay(day)
 {
-  if (!e.target["value"])
+  const currentRoom = getCurrentRoom();
+  if (!day || !currentRoom)
     return;
 
-  const timespan = dayTimespan(e.target["value"]);
+  const timespan = dayTimespan(day);
   const customDayChart = document.querySelector("#customDayChart");
-  const items = await getTimespan(room, timespan.from, timespan.to);
+  const items = await getTimespan(currentRoom, timespan.from, timespan.to);
 
   createChartObject(customDayChart, items);
-});
+}
+
+customDay.addEventListener("change", async e => setCustomDay(e.target["value"]));
+header.addEventListener("roomChanged", async () => setCustomDay(customDay.value));
 if (room)
 {
   const item = (await getLatest(room)).result;

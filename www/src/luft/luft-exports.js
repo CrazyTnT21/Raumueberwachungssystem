@@ -13,17 +13,14 @@ export function createChartObject(element, items)
   element.labels = items.map(item => new Date(item.measured).toLocaleTimeString());
   element.datasets = [{
     label: "Luft",
-    data: items.map(item => (item.value / 100).toFixed(0)),
+    data: items.map(item => item.value.toFixed(0)),
     borderWidth: 1,
   }];
   element.scales.y = {
-    max: 100,
-    min: 0,
+    max: 15000,
+    min: 6000,
     border: {
       display: false,
-    },
-    ticks: {
-      callback: (value) => value + " ppm",
     },
   };
   element.loadChart();
