@@ -1,5 +1,6 @@
 import {AppChart} from "./app-chart.js";
 import {getTimespan} from "../../temperatur/temperatur-exports.js";
+import {timeConfig} from "../scripts/common.js";
 
 export class AppTemperaturChart extends AppChart
 {
@@ -19,6 +20,11 @@ export class AppTemperaturChart extends AppChart
       devicePixelRatio: 4,
       maintainAspectRatio: false,
       plugins: {
+        tooltip: {
+          callbacks: {
+            label: (context) => context.parsed.y + "°C",
+          },
+        },
         title: {
           display: true,
           text: this.title,
@@ -38,6 +44,12 @@ export class AppTemperaturChart extends AppChart
             callback: (value) => value + "°C",
           },
         },
+        x: {
+          min: from,
+          max: to,
+          type: "time",
+          time: timeConfig,
+        },
       },
     };
 
@@ -53,17 +65,18 @@ export class AppTemperaturChart extends AppChart
 
     const items = await getTimespan(room, from, to);
 
-    const labels = items.map(item => new Date(item.measured).toLocaleTimeString());
-
     const datasets = [{
       label: "Temperatur",
-      data: items.map(item => item.valueCelsius.toFixed(2)),
+      data: items.map(item =>
+      {
+        return {x: new Date(item.measured), y: item.valueCelsius.toFixed(2)};
+      }),
       borderWidth: 1,
     }];
 
     const config = {
       type: "line",
-      data: {labels, datasets},
+      data: {datasets},
       options,
     };
     this.loadChart(config);

@@ -13,3 +13,12 @@ export async function getTimespan(roomName, from, to)
   const url = `light/${roomName}/${from.getTime()}-${to.getTime()}`;
   return await getUntilItemCount(url);
 }
+
+export function formatValue(item)
+{
+  const value = item.value.toFixed(2);
+  const date = new Date(item.measured);
+  const time = date.toLocaleTimeString();
+  const timeFormatted = date.getTime() + (1000 * 60 * 60 * 24) < new Date().getTime() ? `${date.toLocaleDateString()} ${time}` : time;
+  return `${value} - ${timeFormatted}`;
+}

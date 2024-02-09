@@ -30,18 +30,20 @@ void updateGraphs(loadedRoom);
 async function updateValues(room)
 {
   const lightItem = await light.getLatest(room);
-  const humidityItem = await humidity.getLatest(room);
-  const temperatureItem = await temperature.getLatest(room);
-  const airItem = await air.getLatest(room);
-
   if (lightItem)
-    document.querySelector("#valueLight").value = lightItem.value.toFixed(2) + " - " + new Date(lightItem.measured).toLocaleTimeString();
+    document.querySelector("#valueLight").value = light.formatValue(lightItem);
+
+  const humidityItem = await humidity.getLatest(room);
   if (humidityItem)
-    document.querySelector("#valueHumidity").value = humidityItem.valuePercentage.toFixed(2) + "% - " + new Date(humidityItem.measured).toLocaleTimeString();
+    document.querySelector("#valueHumidity").value = humidity.formatValue(humidityItem);
+
+  const temperatureItem = await temperature.getLatest(room);
   if (temperatureItem)
-    document.querySelector("#valueTemperature").value = temperatureItem.valueCelsius.toFixed(2) + "°C - " + new Date(temperatureItem.measured).toLocaleTimeString();
+    document.querySelector("#valueTemperature").value = temperature.formatValue(temperatureItem);
+
+  const airItem = await air.getLatest(room);
   if (airItem)
-    document.querySelector("#valueAir").value = airItem.value.toFixed(2) + " - " + new Date(airItem.measured).toLocaleTimeString();
+    document.querySelector("#valueAir").value = air.formatValue(airItem);
 }
 
 async function updateGraphs(room)

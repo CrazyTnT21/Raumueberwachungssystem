@@ -1,6 +1,6 @@
 import {getCurrentRoom} from "../assets/components/app-header.js";
 import {dayTimespan, minutesAgo} from "../assets/scripts/helpers/dateHelper.js";
-import {getLatest} from "./temperatur-exports.js";
+import {formatValue, getLatest} from "./temperatur-exports.js";
 
 const header = document.querySelector("app-header");
 header.addEventListener("roomChanged", async (e) =>
@@ -93,7 +93,5 @@ async function setCustomDay(day)
 
 function setCurrentValue(item)
 {
-  const value = item.valueCelsius.toFixed(2);
-  const time = new Date(item.measured).toLocaleTimeString();
-  document.querySelector("#currentValue").value = `${value}°C - ${time}`;
+  document.querySelector("#currentValue").value = formatValue(item);
 }

@@ -1,5 +1,6 @@
 import {AppChart} from "./app-chart.js";
 import {getTimespan} from "../../luft/luft-exports.js";
+import {timeConfig} from "../scripts/common.js";
 
 export class AppLuftChart extends AppChart
 {
@@ -35,6 +36,12 @@ export class AppLuftChart extends AppChart
             display: false,
           },
         },
+        x: {
+          min: from,
+          max: to,
+          type: "time",
+          time: timeConfig,
+        },
       },
     };
 
@@ -49,18 +56,18 @@ export class AppLuftChart extends AppChart
       };
 
     const items = await getTimespan(room, from, to);
-
-    const labels = items.map(item => new Date(item.measured).toLocaleTimeString());
-
     const datasets = [{
       label: "Luft",
-      data: items.map(item => item.value.toFixed(2)),
+      data: items.map(item =>
+      {
+        return {x: new Date(item.measured), y: item.value.toFixed(2)};
+      }),
       borderWidth: 1,
     }];
 
     const config = {
       type: "line",
-      data: {labels, datasets},
+      data: {datasets},
       options,
     };
     this.loadChart(config);
