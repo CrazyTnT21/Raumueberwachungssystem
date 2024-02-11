@@ -122,12 +122,21 @@ class AppHeader extends HTMLElement
   {
     if (this.getAttribute("data-choose") !== "")
       return;
+
     const roomsElement = this.shadowRoot.querySelector("#rooms");
     if (roomsElement.childElementCount === 0)
     {
       const request = await fetch(SERVER_URL + "room");
       const result = await request.json();
-      this.rooms = result.result;
+      const rooms = result.result.sort((x,y) => x.name.localeCompare(y.name));
+      this.rooms = rooms;
+      const lastRoom = getCurrentRoom();
+      if (!lastRoom && rooms[0])
+      {
+        setCurrentRoom(rooms[0].name);
+
+        this.dispatchEvent(new CustomEvent("roomChanged", {detail: rooms[0].name, composed: true}));
+      }
     }
   }
 

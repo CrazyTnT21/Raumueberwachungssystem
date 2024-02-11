@@ -10,11 +10,13 @@ header.addEventListener("roomChanged", async e =>
 {
   const valuesPromise = updateValues(e.detail);
   const graphsPromise = updateGraphs(e.detail);
+  document.querySelector("#currentRoom").innerText = e.detail;
   await Promise.all([valuesPromise, graphsPromise]);
 });
 const loadedRoom = getCurrentRoom();
 if (loadedRoom)
 {
+  document.querySelector("#currentRoom").innerText = loadedRoom;
   await updateValues(loadedRoom);
 }
 setInterval(async () =>
