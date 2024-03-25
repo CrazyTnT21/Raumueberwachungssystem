@@ -1,6 +1,8 @@
 # Raumüberwachungssystem
 
 ## Webseite
+![humidity.png](/Dokumentation/Screenshots/main.png)
+![humidity.png](/Dokumentation/Screenshots/humidity.png)
 
 ### Lokaler Server
 
