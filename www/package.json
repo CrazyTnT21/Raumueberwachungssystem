@@ -8,13 +8,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "chart.js": "^4.4.2",
+    "chart.js": "^4.4.3",
     "chartjs-adapter-date-fns": "^3.0.0",
     "date-fns": "^3.6.0",
-    "webpack": "^5.91.0"
+    "webpack": "^5.93.0"
   },
   "devDependencies": {
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "5.0.4"
+    "webpack-dev-server": "^5.0.4"
   }
 }
